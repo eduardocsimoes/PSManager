@@ -66,6 +66,12 @@ create table pelada_agendamento(
     primary key(id_agendamento)
 );
 
+create table pelada_agendamento_peladeiro(
+	id_agendamento bigint not null auto_increment,
+    id_peladeiro bigint not null,
+    primary key(id_agendamento, id_peladeiro)
+);
+
 create table pelada_agendamento_equipe(
     id_equipe bigint not null auto_increment,
     id_pelada_agendamento bigint not null,
