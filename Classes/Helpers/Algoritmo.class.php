@@ -12,7 +12,7 @@ class Algoritmo {
 
     private function InformacoesJogadores(){
         $peladeiros = new Read();
-        $peladeiros->ExeRead("", $Termos)
+        $peladeiros->ExeRead("", $Termos);
     }
     
     private function ExecutaAlgoritmo(){
