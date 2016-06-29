@@ -49,14 +49,19 @@ class Algoritmo {
         endforeach;
     }  
     
-    private function informacoesHabilidades(){
-        $this->informacaoHabilidade = $this->informacaoPeladeiro;
-        /*
-        foreach ($informacaoHabilidades as $habilidade):
-            if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
-                $this->informacaoHabilidades[$id_habilidade];
-            endif;                        
-        endforeach;*/
+    private function informacoesHabilidades(){               
+        foreach ($this->informacaoPeladeiro as $agendamento => $valueAgendamento):    
+            foreach ($valueAgendamento as $peladeiro => $valuePeladeiro):
+                $this->informacaoHabilidade = $valuePeladeiro;
+
+                /*foreach ($valuePeladeiro as $habilidade => $valueHabilidade):
+                    $this->informacaoHabilidade = $valueHabilidade;
+                    if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
+                        $this->informacaoHabilidades[$id_habilidade];
+                    endif;
+                endforeach;*/
+            endforeach;
+        endforeach;
     }     
     
     private function getQtdJogadores(){        
