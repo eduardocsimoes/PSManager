@@ -1,45 +1,75 @@
 <?php
 class Algoritmo {
-    private $Algoritmo;
-    private $QtdEquipes;
-    private $id_agendamento;
+    private $algoritmo;
+    private $qtdEquipes;
+    private $idAgendamento;
     private $idPeladeiro;
-    private $QtdPeladeiros;
-    private $TotaldePontos;
-    private $MediaporEquipe;
-    private $PontuacaodaEquipe;
-    
-    public function EscolhaAlgoritmo($Algoritmo){        
-        $this->Algoritmo = $Algoritmo;        
-        $this->QtdEquipes = 3;
-        $id_agendamento = 1;
+    private $qtdPeladeiros;
+    private $totaldePontos;
+    private $mediaporEquipe;
+    private $pontuacaodaEquipe;
+    private $informacaoPeladeiro;
+    private $informacaoPelada;
+    private $informacaoHabilidade;
         
-        $this->InformacoesJogadores();
-        $this->ExecutaAlgoritmo();       
+    public function escolhaAlgoritmo($Algoritmo){        
+        $this->algoritmo = $Algoritmo;        
+        $this->qtdEquipes = 3;
+        $this->idAgendamento = 1;
+        
+        $this->informacoesJogadores();
+        $this->informacoesHabilidades();
+        $this->executaAlgoritmo();       
     }
+        
+    public function getInformacaoPeladeiro(){
+        return $this->informacaoPeladeiro;
+    }    
 
-    private function InformacoesJogadores(){
+    public function getInformacaoHabilidade(){
+        return $this->informacaoHabilidade;
+    }             
+    
+    private function informacoesJogadores(){
         $agendamento_peladeiro = new Read();
-        $agendamento_peladeiro->ExeRead("pelada_agendamento_peladeiro", "WHERE id_agendamento = :idAgendamento", "idAgendamento=".$id_agendamento);
-        $qtdPeladeiros = $agendamento_peladeiro->getRowCount();
-                
+        $agendamento_peladeiro->ExeRead("pelada_agendamento_peladeiro", "WHERE id_agendamento = :idAgendamento", "idAgendamento=".$this->idAgendamento);
+        $this->qtdPeladeiros = $agendamento_peladeiro->getRowCount();
+        
         foreach ($agendamento_peladeiro->getResult() as $agendamento):
-            $idPeladeiro -> $agendamento["id_peladeiro"];
+            extract($agendamento);
             
             $peladeiro = new Read();
-            $peladeiro->ExeRead("peladeiro", "WHERE id_peladeiro = idPeladeiro", "idPeladeiro=".$id_peladeiro);
+            $peladeiro->ExeRead("peladeiro_habilidade", "WHERE id_peladeiro = :idPeladeiro", "idPeladeiro=".$id_peladeiro);
             
             foreach ($peladeiro->getResult() as $player):
                 extract($player);
-            
                 
+                $this->informacaoPeladeiro[$this->idAgendamento][$id_peladeiro][$id_habilidade][$nivel] = $nivel;
             endforeach;
         endforeach;
+    }  
+    
+    private function informacoesHabilidades(){
+        $this->informacaoHabilidade = $this->informacaoPeladeiro;
+        /*
+        foreach ($informacaoHabilidades as $habilidade):
+            if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
+                $this->informacaoHabilidades[$id_habilidade];
+            endif;                        
+        endforeach;*/
+    }     
+    
+    private function getQtdJogadores(){        
+        return $this->qtdPeladeiros;
+    }
+        
+    private function getValorHabilidades(){
+        return $this->informacaoHabilidades;
     }
     
-    private function ExecutaAlgoritmo(){
-        if($this->Algoritmo == 1):
-            $this->MediaporEquipe = $this->TotaldePontos/$this->QtdEquipes; 
+    private function executaAlgoritmo(){
+        if($this->algoritmo == 1):
+            $this->mediaporEquipe = $this->totaldePontos/$this->qtdEquipes; 
         endif;
     }
 }

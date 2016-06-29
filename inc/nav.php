@@ -10,5 +10,6 @@
                 <li><a href="peladeirohabilidade.php">Peladeiro x Habilidade</a></li>
                 <li><a href="peladaagendamento.php">Pelada x Agendamento</a></li>
                 <li><a href="peladaagendamentotime.php">Pelada x Agendamento x Time</a></li>
+                <li><a href="testealgoritmo.php">Teste do Algoritmo</a></li>
             </ul>
         </nav>   

@@ -70,5 +70,4 @@ class Create extends Conn {
             WSErro("<b>Erro ao cadastrar:</b> {$e->getMessage()}", $e->getCode());
         }
     }
-
 }
