@@ -44,22 +44,39 @@ class Algoritmo {
             foreach ($peladeiro->getResult() as $player):
                 extract($player);
                 
-                $this->informacaoPeladeiro[$this->idAgendamento][$id_peladeiro][$id_habilidade][$nivel] = $nivel;
+                if(in_array($id_peladeiro, $this->informacaoPeladeiro)):
+                    $this->informacaoPeladeiro['Peladeiro'][$id_peladeiro] = array(
+                        'Habilidade' => array(
+                            'id' => $id_habilidade,
+                            'Nivel' => array(
+                                'valor' => $nivel
+                            )
+                        )
+                    );                   
+                else:
+                    $this->informacaoPeladeiro[] = array(
+                        'Peladeiro' => array(
+                            'id' => $id_peladeiro,
+                            'Habilidade' => array(
+                                'id' => $id_habilidade,
+                                'Nivel' => array(
+                                    'valor' => $nivel
+                                )
+                            )
+                        )                   
+                    );                    
+                endif;                
             endforeach;
         endforeach;
     }  
     
-    private function informacoesHabilidades(){               
-        foreach ($this->informacaoPeladeiro as $agendamento => $valueAgendamento):    
-            foreach ($valueAgendamento as $peladeiro => $valuePeladeiro):
-                $this->informacaoHabilidade = $valuePeladeiro;
-
-                /*foreach ($valuePeladeiro as $habilidade => $valueHabilidade):
-                    $this->informacaoHabilidade = $valueHabilidade;
-                    if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
-                        $this->informacaoHabilidades[$id_habilidade];
-                    endif;
-                endforeach;*/
+    private function informacoesHabilidades(){                       
+        foreach ($this->informacaoPeladeiro as $peladeiro => $valuePeladeiro): 
+            foreach ($valuePeladeiro as $habilidade => $valueHabilidade):
+                $this->informacaoHabilidade[] = $valueHabilidade['Habilidade']['id'];
+                /*if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
+                    $this->informacaoHabilidades[$id_habilidade];
+                endif;*/
             endforeach;
         endforeach;
     }     
