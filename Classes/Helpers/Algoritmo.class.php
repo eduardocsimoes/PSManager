@@ -18,7 +18,7 @@ class Algoritmo {
         $this->idAgendamento = 1;
         
         $this->informacoesJogadores();
-        $this->informacoesHabilidades();
+        //$this->informacoesHabilidades();
         $this->executaAlgoritmo();       
     }
         
@@ -41,46 +41,42 @@ class Algoritmo {
             $peladeiro = new Read();
             $peladeiro->ExeRead("peladeiro_habilidade", "WHERE id_peladeiro = :idPeladeiro", "idPeladeiro=".$id_peladeiro);
             
-            foreach ($peladeiro->getResult() as $player):
-                extract($player);
-                
-                if(in_array($id_peladeiro, $this->informacaoPeladeiro)):
-                    $this->informacaoPeladeiro['Peladeiro'][$id_peladeiro] = array(
-                        'Habilidade' => array(
-                            'id' => $id_habilidade,
-                            'Nivel' => array(
-                                'valor' => $nivel
-                            )
-                        )
-                    );                   
-                else:
-                    $this->informacaoPeladeiro[] = array(
-                        'Peladeiro' => array(
-                            'id' => $id_peladeiro,
-                            'Habilidade' => array(
-                                'id' => $id_habilidade,
-                                'Nivel' => array(
-                                    'valor' => $nivel
+            foreach ($peladeiro->getResult() as $Indice1 => $valueIndice1):
+                //$this->informacaoPeladeiro[] = $valueIndice1;
+                extract($valueIndice1);
+                $this->informacaoPeladeiro = null;
+            
+                for($i=0;$i<=25;$i++):  
+                    $auxiliar = $this->informacaoPeladeiro[$i]['Peladeiro']['id'];
+                    if($auxiliar != '7'):
+                        $this->informacaoPeladeiro[] = array(
+                            'Peladeiro' => array(
+                                'id' => $id_peladeiro,
+                                'Habilidade' => array(
+                                    'id' => $id_habilidade,
+                                    'Nivel' => array(
+                                        'valor' => $nivel
+                                    )
                                 )
-                            )
-                        )                   
-                    );                    
-                endif;                
+                            )                   
+                        );
+                    endif;
+                endfor;
             endforeach;
         endforeach;
     }  
-    
+/*    
     private function informacoesHabilidades(){                       
         foreach ($this->informacaoPeladeiro as $peladeiro => $valuePeladeiro): 
             foreach ($valuePeladeiro as $habilidade => $valueHabilidade):
                 $this->informacaoHabilidade[] = $valueHabilidade['Habilidade']['id'];
-                /*if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
+                if(!in_array($habilidade[$id_habilidade], $this->informacaoHabilidades[$id_habilidade])):
                     $this->informacaoHabilidades[$id_habilidade];
-                endif;*/
+                endif;
             endforeach;
         endforeach;
     }     
-    
+*/    
     private function getQtdJogadores(){        
         return $this->qtdPeladeiros;
     }
