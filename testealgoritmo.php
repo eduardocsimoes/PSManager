@@ -13,6 +13,15 @@ require('Classes/Config.inc.php');
 
             $habilidade = $algoritmo->getInformacaoHabilidade();
             var_dump($habilidade);
+            
+            $qtdJogadores = $algoritmo->getQtdJogadores();
+            var_dump($qtdJogadores);
+            $qtdEquipes = $algoritmo->getQtdEquipes();
+            var_dump($qtdEquipes);
+            $mediaEquipes = $algoritmo->getMediaEquipes();
+            var_dump($mediaEquipes);
+            $equipes = $algoritmo->getEquipes();
+            var_dump($equipes);
         ?>
     </body>
 </html>

@@ -13,7 +13,9 @@ class Algoritmo {
     private $informacaoPelada;
     private $informacaoHabilidade;
     private $qtdPeladeirosporEquipe;
+    private $qtdTotalJogadoresEquipes;
     private $incluirGoleiro;
+    private $equipes;
     
     public function escolhaAlgoritmo($Algoritmo){        
         $this->algoritmo = $Algoritmo;        
@@ -39,6 +41,18 @@ class Algoritmo {
     public function getQtdJogadores(){        
         return $this->qtdPeladeiros;
     }
+
+    public function getQtdEquipes(){        
+        return $this->qtdEquipes;
+    }
+    
+    public function getMediaEquipes(){        
+        return $this->mediaporEquipe;
+    }
+
+    public function getEquipes(){        
+        return $this->equipes;
+    }
     
     private function informacoesJogadores(){
         $agendamento_peladeiro = new Read();
@@ -55,6 +69,7 @@ class Algoritmo {
                 extract($Indice1);                                
                 $this->informacaoPeladeiro[] = array(
                     'id' => $id_peladeiro,
+                    'nome' => $nome_peladeiro,
                     'posicao' => $posicao_predominante
                 );                
             endforeach;
@@ -88,22 +103,30 @@ class Algoritmo {
         endforeach;
     }     
     
-    private function getTotaldePontos(){
+    private function setTotaldePontos(){
         if($this->algoritmo == 1):
             $this->totaldePontos = $this->informacaoHabilidade[1];
         endif;        
     }
-    
-    private function getMediaporEquipe(){
-        $this->getTotaldePontos();
-        
 
+    private function setQtdEquipes(){                
+        if(($this->qtdPeladeiros/$this->qtdPeladeirosporEquipe) <= $this->maxEquipes):
+            $this->qtdEquipes = ceil($this->qtdPeladeiros/$this->qtdPeladeirosporEquipe);
+        else:
+            $this->qtdEquipes = $this->maxEquipes;
+        endif;
+    }
+    
+    private function setMediaporEquipe(){
+        $this->setTotaldePontos();
+        $this->setQtdEquipes();
+        
         if($this->algoritmo == 1):
             $this->mediaporEquipe = $this->totaldePontos/$this->qtdEquipes;
         endif;  
     }
 
-    private function definirRegraFormacao(){
+    private function definirRegrasFormacao(){
         if (($this->qtdPeladeiros / $this->qtdEquipes) > $this->maxEquipes):
             $this->temRevesamento = 'S';
         else:
@@ -116,12 +139,71 @@ class Algoritmo {
             //Desenvolver regra para distribuir primeiramente os goleiros
         endif;        
     }
+
+    private function somaJogadoresEquipe(){
+        for($e=0;$e<count($this->equipes);$e++):
+            $this->$qtdTotalJogadoresEquipes += count($this->equipes[$e]);
+        endfor;                
+    }
     
     private function executaAlgoritmo(){        
-        $this->getMediaporEquipe();
+        $this->setMediaporEquipe();
         $this->definirRegrasFormacao();
+        $this->somaJogadoresEquipe();
         
         if($this->algoritmo == 1):
+            for($e=0;$e<$this->qtdEquipes;$e++):
+                $this->equipes[] = array(
+                    'id' => $e
+                );
+            endfor;
+            
+            $arrayC = $this->informacaoPeladeiro;
+            for($i=0;$i<count($arrayC);$i++):
+                for($j=$i;$j<count($arrayC);$j++):
+                    if($arrayC[$j]['habilidade'][1] < $arrayC[$i]['habilidade'][1]):
+                        $arrayAux = $arrayC[$i];
+                        $arrayC[$i] = $arrayC[$j];                        
+                        $arrayC[$j] = $arrayAux;
+                    endif;
+                endfor;
+            endfor;
+
+            $arrayD = $this->informacaoPeladeiro;
+            for($i=0;$i<count($arrayD);$i++):
+                for($j=$i;$j<count($arrayD);$j++):
+                    if($arrayD[$j]['habilidade'][1] > $arrayD[$i]['habilidade'][1]):
+                        $arrayAux = $arrayD[$i];
+                        $arrayD[$i] = $arrayD[$j];                        
+                        $arrayD[$j] = $arrayAux;
+                    endif;
+                endfor;
+            endfor;    
+            
+            while($this->$qtdTotalJogadoresEquipes < count($this->informacaoPeladeiro)):
+                
+                
+                $this->somaJogadoresEquipe();
+            endwhile;
+            /*for($i=0;$i<count($this->informacaoPeladeiro);$i++):
+                
+                $this->$qtdTotalJogadoresEquipes;
+            endfor;*/
+            
+            if(isset($arrayD)):
+                $this->informacaoPeladeiro = $arrayD;
+            endif;  
+            
+            
+/*
+            // Compara se $a é maior que $b
+            function cmp($a, $b) {
+                return $a['habilidade'] > $b['nome'];
+            }
+ 
+            // Ordena
+            usort($this->informacaoPeladeiro, 'cmp');
+*/                     
 
         endif;
     }
