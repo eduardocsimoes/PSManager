@@ -11,6 +11,9 @@ require('Classes/Config.inc.php');
             $peladeiro = $algoritmo->getInformacaoPeladeiro();
             var_dump($peladeiro);
 
+            $peladeiroD = $algoritmo->getInformacaoPeladeiroD();
+            var_dump($peladeiroD);
+            
             $habilidade = $algoritmo->getInformacaoHabilidade();
             var_dump($habilidade);
             
@@ -22,6 +25,8 @@ require('Classes/Config.inc.php');
             var_dump($mediaEquipes);
             $equipes = $algoritmo->getEquipes();
             var_dump($equipes);
+            $jogadoresExcedentes = $algoritmo->getJogadoresExcedentes();
+            var_dump($jogadoresExcedentes);
         ?>
     </body>
 </html>

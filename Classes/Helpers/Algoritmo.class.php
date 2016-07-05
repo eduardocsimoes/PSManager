@@ -10,12 +10,16 @@ class Algoritmo {
     private $mediaporEquipe;
     private $pontuacaodaEquipe;
     private $informacaoPeladeiro;
+    private $informacaoPeladeiroD;
     private $informacaoPelada;
     private $informacaoHabilidade;
     private $qtdPeladeirosporEquipe;
     private $qtdTotalJogadoresEquipes;
     private $incluirGoleiro;
     private $equipes;
+    private $jogadoresExcedentes;
+    private $qtdJogadoresExcedentes;
+    private $temRevesamento;
     
     public function escolhaAlgoritmo($Algoritmo){        
         $this->algoritmo = $Algoritmo;        
@@ -24,6 +28,7 @@ class Algoritmo {
         $this->maxEquipes = 3;
         $this->qtdPeladeirosporEquipe = 6;
         $this->incluirGoleiro = 'S';
+        $this->qtdTotalJogadoresEquipes = 0;
         
         $this->informacoesJogadores();
         $this->informacoesHabilidades();
@@ -34,6 +39,10 @@ class Algoritmo {
         return $this->informacaoPeladeiro;
     }    
 
+    public function getInformacaoPeladeiroD(){
+        return $this->informacaoPeladeiroD;
+    }       
+    
     public function getInformacaoHabilidade(){
         return $this->informacaoHabilidade;
     }             
@@ -52,6 +61,10 @@ class Algoritmo {
 
     public function getEquipes(){        
         return $this->equipes;
+    }
+    
+    public function getJogadoresExcedentes() {
+        return $this->jogadoresExcedentes;
     }
     
     private function informacoesJogadores(){
@@ -129,6 +142,7 @@ class Algoritmo {
     private function definirRegrasFormacao(){
         if (($this->qtdPeladeiros / $this->qtdEquipes) > $this->maxEquipes):
             $this->temRevesamento = 'S';
+            $this->qtdJogadoresExcedentes = $this->qtdPeladeiros - ($this->maxEquipes * $this->qtdPeladeirosporEquipe);
         else:
             $this->temRevesamento = 'N';
         endif;
@@ -142,7 +156,7 @@ class Algoritmo {
 
     private function somaJogadoresEquipe(){
         for($e=0;$e<count($this->equipes);$e++):
-            $this->$qtdTotalJogadoresEquipes += count($this->equipes[$e]);
+            $this->qtdTotalJogadoresEquipes += count($this->equipes[$e]);
         endfor;                
     }
     
@@ -151,6 +165,20 @@ class Algoritmo {
         $this->definirRegrasFormacao();
         $this->somaJogadoresEquipe();
         
+        $this->informacaoPeladeiroD = $this->informacaoPeladeiro;
+        
+        if($this->temRevesamento == 'S'):
+            $this->jogadoresExcedentes = array_rand($this->informacaoPeladeiroD, $this->qtdJogadoresExcedentes);
+            if(is_array($this->jogadoresExcedentes)):
+                for($j=0;$j<count($this->jogadoresExcedentes);$j++):
+                    unset($this->informacaoPeladeiroD[$this->jogadoresExcedentes[$j]]);
+                endfor;                
+            else:
+                unset($this->informacaoPeladeiroD[$this->jogadoresExcedentes]);            
+            endif;
+
+        endif;
+        
         if($this->algoritmo == 1):
             for($e=0;$e<$this->qtdEquipes;$e++):
                 $this->equipes[] = array(
@@ -158,7 +186,7 @@ class Algoritmo {
                 );
             endfor;
             
-            $arrayC = $this->informacaoPeladeiro;
+            /*$arrayC = $this->informacaoPeladeiro;
             for($i=0;$i<count($arrayC);$i++):
                 for($j=$i;$j<count($arrayC);$j++):
                     if($arrayC[$j]['habilidade'][1] < $arrayC[$i]['habilidade'][1]):
@@ -167,45 +195,38 @@ class Algoritmo {
                         $arrayC[$j] = $arrayAux;
                     endif;
                 endfor;
-            endfor;
-
-            $arrayD = $this->informacaoPeladeiro;
-            for($i=0;$i<count($arrayD);$i++):
-                for($j=$i;$j<count($arrayD);$j++):
-                    if($arrayD[$j]['habilidade'][1] > $arrayD[$i]['habilidade'][1]):
-                        $arrayAux = $arrayD[$i];
-                        $arrayD[$i] = $arrayD[$j];                        
-                        $arrayD[$j] = $arrayAux;
-                    endif;
-                endfor;
-            endfor;    
-            
-            while($this->$qtdTotalJogadoresEquipes < count($this->informacaoPeladeiro)):
-                
-                
-                $this->somaJogadoresEquipe();
-            endwhile;
-            /*for($i=0;$i<count($this->informacaoPeladeiro);$i++):
-                
-                $this->$qtdTotalJogadoresEquipes;
             endfor;*/
             
-            if(isset($arrayD)):
-                $this->informacaoPeladeiro = $arrayD;
-            endif;  
-            
-            
+            for($i=0;$i<count($this->informacaoPeladeiroD);$i++):                
+                for($j=$i;$j<count($this->informacaoPeladeiroD)+1;$j++):
+                    if($this->informacaoPeladeiroD[$j]['habilidade'][1] > $this->informacaoPeladeiroD[$i]['habilidade'][1]):
+                        $arrayAux = $this->informacaoPeladeiroD[$i];
+                        $this->informacaoPeladeiroD[$i] = $this->informacaoPeladeiroD[$j];                        
+                        $this->informacaoPeladeiroD[$j] = $arrayAux;
+                    endif;
+                endfor;
+            endfor;
+            $this->informacaoPeladeiroD = array_filter($this->informacaoPeladeiroD);
 /*
-            // Compara se $a é maior que $b
-            function cmp($a, $b) {
-                return $a['habilidade'] > $b['nome'];
-            }
- 
-            // Ordena
-            usort($this->informacaoPeladeiro, 'cmp');
-*/                     
-
+            while($this->qtdTotalJogadoresEquipes < count($this->informacaoPeladeiro)):
+                for($i=0;$i<$this->qtdEquipes;$i++):
+                    $this->equipes[$i] = array (
+                        'jogador' => $this->informacaoPeladeiroD[0]);
+                    array_shift($this->informacaoPeladeiroD);                    
+                endfor;
+                    
+                array_reverse($this->informacaoPeladeiroD);
+                
+                $this->somaJogadoresEquipe();                
+            endwhile;  */          
         endif;
     }
 }
+/*
+SAIMON
+ALVIN
+TEODOR
+BRITANI
+JANETE
+ELEONOR*/
 ?>
