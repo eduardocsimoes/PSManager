@@ -176,49 +176,57 @@ class Algoritmo {
             else:
                 unset($this->informacaoPeladeiroD[$this->jogadoresExcedentes]);            
             endif;
+            
+            for($i=0;$i<=max(array_keys($this->informacaoPeladeiroD));$i++):                
+                $hasEmpty = null;
+                if($this->informacaoPeladeiroD[$i]):                                         
+                    for($l=$i;$l>=0;$l--):
+                        if(!$this->informacaoPeladeiroD[$l]):
+                            $hasEmpty = $l;
+                        endif;
+                    endfor;
+                endif;
+                
+                if($hasEmpty):
+                    //$this->informacaoPeladeiroD = $hasEmpty;
+                    $this->informacaoPeladeiroD[$hasEmpty] = $this->informacaoPeladeiroD[$i];
+                    //unset($this->informacaoPeladeiroD[$i]);
+                endif;
+            endfor;
+        endif;    
 
-        endif;
+        //$this->informacaoPeladeiroD = array_filter($this->informacaoPeladeiroD);        
         
         if($this->algoritmo == 1):
             for($e=0;$e<$this->qtdEquipes;$e++):
                 $this->equipes[] = array(
                     'id' => $e
                 );
-            endfor;
-            
-            /*$arrayC = $this->informacaoPeladeiro;
-            for($i=0;$i<count($arrayC);$i++):
-                for($j=$i;$j<count($arrayC);$j++):
-                    if($arrayC[$j]['habilidade'][1] < $arrayC[$i]['habilidade'][1]):
-                        $arrayAux = $arrayC[$i];
-                        $arrayC[$i] = $arrayC[$j];                        
-                        $arrayC[$j] = $arrayAux;
-                    endif;
-                endfor;
-            endfor;*/
-            
+            endfor;            
+/*                        
             for($i=0;$i<count($this->informacaoPeladeiroD);$i++):                
-                for($j=$i;$j<count($this->informacaoPeladeiroD)+1;$j++):
+                for($j=$i+1;$j<=count($this->informacaoPeladeiroD);$j++):
                     if($this->informacaoPeladeiroD[$j]['habilidade'][1] > $this->informacaoPeladeiroD[$i]['habilidade'][1]):
                         $arrayAux = $this->informacaoPeladeiroD[$i];
                         $this->informacaoPeladeiroD[$i] = $this->informacaoPeladeiroD[$j];                        
                         $this->informacaoPeladeiroD[$j] = $arrayAux;
                     endif;
                 endfor;
-            endfor;
-            $this->informacaoPeladeiroD = array_filter($this->informacaoPeladeiroD);
+            endfor;*/
 /*
+
             while($this->qtdTotalJogadoresEquipes < count($this->informacaoPeladeiro)):
                 for($i=0;$i<$this->qtdEquipes;$i++):
                     $this->equipes[$i] = array (
-                        'jogador' => $this->informacaoPeladeiroD[0]);
+                        'jogador' => $this->informacaoPeladeiroD[0]
+                    );
                     array_shift($this->informacaoPeladeiroD);                    
                 endfor;
                     
                 array_reverse($this->informacaoPeladeiroD);
                 
                 $this->somaJogadoresEquipe();                
-            endwhile;  */          
+            endwhile;*/
         endif;
     }
 }
