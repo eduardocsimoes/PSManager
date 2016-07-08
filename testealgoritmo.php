@@ -27,6 +27,7 @@ require('Classes/Config.inc.php');
             var_dump($equipes);
             $jogadoresExcedentes = $algoritmo->getJogadoresExcedentes();
             var_dump($jogadoresExcedentes);
+//            var_dump($algoritmo->getMsg());
         ?>
     </body>
 </html>
