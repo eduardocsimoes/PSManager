@@ -16,18 +16,17 @@ require('Classes/Config.inc.php');
             
             $habilidade = $algoritmo->getInformacaoHabilidade();
             var_dump($habilidade);
-            
+                        
             $qtdJogadores = $algoritmo->getQtdJogadores();
             var_dump($qtdJogadores);
-            $qtdEquipes = $algoritmo->getQtdEquipes();
-            var_dump($qtdEquipes);
+            $jogadoresExcedentes = $algoritmo->getJogadoresExcedentes();
+            var_dump($jogadoresExcedentes);            
             $mediaEquipes = $algoritmo->getMediaEquipes();
             var_dump($mediaEquipes);
+            $qtdEquipes = $algoritmo->getQtdEquipes();
+            var_dump($qtdEquipes);            
             $equipes = $algoritmo->getEquipes();
             var_dump($equipes);
-            $jogadoresExcedentes = $algoritmo->getJogadoresExcedentes();
-            var_dump($jogadoresExcedentes);
-//            var_dump($algoritmo->getMsg());
         ?>
     </body>
 </html>
