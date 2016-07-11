@@ -22,6 +22,8 @@ class Algoritmo {
     private $qtdJogadoresExcedentes;
     private $temRevesamento;
     private $valorExcedente;
+    private $selecaoEquipe;
+    private $mediaJogadoresEquipes;
     
     public function escolhaAlgoritmo($Algoritmo){        
         $this->algoritmo = $Algoritmo;        
@@ -48,6 +50,10 @@ class Algoritmo {
     public function getInformacaoHabilidade(){
         return $this->informacaoHabilidade;
     }             
+
+    public function getInformacaoHabilidadeFinal(){
+        return $this->informacaoHabilidadeD;
+    }    
     
     public function getQtdJogadores(){        
         return $this->qtdPeladeiros;
@@ -57,7 +63,7 @@ class Algoritmo {
         return $this->qtdEquipes;
     }
     
-    public function getMediaEquipes(){        
+    public function getMediaTotalEquipes(){        
         return $this->mediaporEquipe;
     }
 
@@ -67,6 +73,20 @@ class Algoritmo {
     
     public function getJogadoresExcedentes() {
         return $this->jogadoresExcedentes;
+    }
+    
+    public function getMediaJogadoresEquipe(){
+        for($i=0;$i<$this->qtdEquipes;$i++):
+            for($j=0;$j<count($this->equipes[$i]);$j++):
+                if(isset($this->mediaJogadoresEquipes[$i]['valor'])):
+                    $this->mediaJogadoresEquipes[$i]['valor'] = (float) $this->mediaJogadoresEquipes[$i]['valor'] + (float) $this->equipes[$i][$j]['habilidade'][1];
+                else:
+                    $this->mediaJogadoresEquipes[$i]['valor'] = (float) $this->equipes[$i][$j]['habilidade'][1];
+                endif;
+            endfor;            
+        endfor;
+        
+        return $this->mediaJogadoresEquipes;
     }
     
     private function informacoesJogadores(){
@@ -116,7 +136,7 @@ class Algoritmo {
                 endif;                
             endforeach;
         endforeach;
-    }     
+    }         
     
     private function setTotaldePontos(){
         $this->valorExcedente = 0;
@@ -169,7 +189,7 @@ class Algoritmo {
     private function somaJogadoresEquipe(){
         for($e=0;$e<count($this->equipes);$e++):
             $this->qtdTotalJogadoresEquipes += count($this->equipes[$e]);
-        endfor;                
+        endfor;                  
     }
     
     private function executaAlgoritmo(){        
@@ -206,17 +226,9 @@ class Algoritmo {
         endif;    
 
         $this->setMediaporEquipe();
-        $this->somaJogadoresEquipe();
-        
-        //$this->informacaoPeladeiroD = array_filter($this->informacaoPeladeiroD);        
+        $this->somaJogadoresEquipe(); 
         
         if($this->algoritmo == 1):
-            for($e=0;$e<$this->qtdEquipes;$e++):
-                $this->equipes[] = array(
-                    'id' => $e
-                );
-            endfor;            
-                        
             for($i=0;$i<count($this->informacaoPeladeiroD);$i++):                
                 for($j=$i+1;$j<count($this->informacaoPeladeiroD);$j++):
                     if(($this->informacaoPeladeiroD[$j]['habilidade'][1] > $this->informacaoPeladeiroD[$i]['habilidade'][1])):
@@ -227,19 +239,27 @@ class Algoritmo {
                 endfor;
             endfor;
             
-            $this->informacaoPeladeiroE = $this->informacaoPeladeiroD;
-
+            $this->informacaoPeladeiroE = $this->informacaoPeladeiroD;            
+            
+            $this->selecaoEquipe = 0;
             for($i=0;$i<count($this->informacaoPeladeiroE);$i++):
-                for($i=0;$i<$this->qtdEquipes;$i++):
-                    $this->equipes[$i] = array (
-                        'jogador' => $this->informacaoPeladeiroE[$i]
-                    );
-                    array_shift($this->informacaoPeladeiroE);
-                endfor;
-                    
-                array_reverse($this->informacaoPeladeiroE);
-                
-                $this->somaJogadoresEquipe();
+                $this->equipes[$this->selecaoEquipe][] = array (
+                    'id' => $this->informacaoPeladeiroE[$i]['id'],
+                    'nome' => $this->informacaoPeladeiroE[$i]['nome'],
+                    'posicao' => $this->informacaoPeladeiroE[$i]['posicao'],
+                    'habilidade' => $this->informacaoPeladeiroE[$i]['habilidade']
+                );
+            
+                array_shift($this->informacaoPeladeiroE[$i]);
+
+                if($this->selecaoEquipe < ($this->qtdEquipes - 1)):
+                    $this->selecaoEquipe++;
+                else:
+                    $this->selecaoEquipe = 0;
+                    array_reverse($this->informacaoPeladeiroE);
+                endif;
+
+                //$this->somaJogadoresEquipe();
             endfor;
         endif;
     }

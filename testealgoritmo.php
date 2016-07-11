@@ -14,19 +14,23 @@ require('Classes/Config.inc.php');
             $peladeiroD = $algoritmo->getInformacaoPeladeiroD();
             var_dump($peladeiroD);
             
-            $habilidade = $algoritmo->getInformacaoHabilidade();
-            var_dump($habilidade);
-                        
+            $equipes = $algoritmo->getEquipes();
+            var_dump($equipes);            
+                                 
+            $qtdEquipes = $algoritmo->getQtdEquipes();
+            var_dump($qtdEquipes);                
             $qtdJogadores = $algoritmo->getQtdJogadores();
             var_dump($qtdJogadores);
             $jogadoresExcedentes = $algoritmo->getJogadoresExcedentes();
-            var_dump($jogadoresExcedentes);            
-            $mediaEquipes = $algoritmo->getMediaEquipes();
+            var_dump($jogadoresExcedentes);
+            $habilidade = $algoritmo->getInformacaoHabilidade();
+            var_dump($habilidade);
+            //$habilidadeFinal = $algoritmo->getInformacaoHabilidadeFinal();
+            //var_dump($habilidadeFinal);
+            $mediaTotalEquipes = $algoritmo->getMediaTotalEquipes();            
+            var_dump($mediaTotalEquipes);                    
+            $mediaEquipes = $algoritmo->getMediaJogadoresEquipe();
             var_dump($mediaEquipes);
-            $qtdEquipes = $algoritmo->getQtdEquipes();
-            var_dump($qtdEquipes);            
-            $equipes = $algoritmo->getEquipes();
-            var_dump($equipes);
         ?>
     </body>
 </html>
