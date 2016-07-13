@@ -266,6 +266,7 @@ class Algoritmo {
                 //$this->somaJogadoresEquipe();
             endfor;
 */                      
+/*
             $aux = current($this->informacaoPeladeiroE);
             for($i=0;$i<18;$i++):            
                 $this->equipes[$this->selecaoEquipe][] = array (
@@ -286,6 +287,16 @@ class Algoritmo {
                     $aux = current($this->informacaoPeladeiroE);
                 endif;
             endfor;
+ */
+            sort($this->informacaoPeladeiroE[]['habilidade'][1], SORT_NUMERIC);
+/*
+            if(!isset($this->selecaoEquipe)):
+                for($i=0;$i<count($this->qtdEquipes);$i++):
+                    $this->equipes[$this->selecaoEquipe][] = $this->informacaoPeladeiroE[max($this->informacaoPeladeiroE[])]
+                endfor;
+            else:
+                
+            endif;*/
         endif;
     }
 }
