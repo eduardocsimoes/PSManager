@@ -246,7 +246,7 @@ class Algoritmo {
             $this->informacaoPeladeiroE = $this->informacaoPeladeiroD;            
             
             $this->selecaoEquipe = 0;
-            /*for($i=0;$i<count($this->informacaoPeladeiroE);$i++):
+/*            for($i=0;$i<count($this->informacaoPeladeiroE);$i++):
                 $this->equipes[$this->selecaoEquipe][] = array (
                     'id' => $this->informacaoPeladeiroE[$i]['id'],
                     'nome' => $this->informacaoPeladeiroE[$i]['nome'],
@@ -254,7 +254,7 @@ class Algoritmo {
                     'habilidade' => $this->informacaoPeladeiroE[$i]['habilidade']
                 );
             
-                array_shift($this->informacaoPeladeiroE[$i]);
+                array_shift($this->informacaoPeladeiroE);
 
                 if($this->selecaoEquipe < ($this->qtdEquipes - 1)):
                     $this->selecaoEquipe++;
@@ -264,33 +264,32 @@ class Algoritmo {
                 endif;
 
                 //$this->somaJogadoresEquipe();
-            endfor;*/
-            
+            endfor;
+*/                      
             $aux = current($this->informacaoPeladeiroE);
-            for($i=0;$i<18;$i++):
+            for($i=0;$i<18;$i++):            
                 $this->equipes[$this->selecaoEquipe][] = array (
                     'id' => $aux['id'],
                     'nome' => $aux['nome'],
                     'posicao' => $aux['posicao'],
                     'habilidade' => $aux['habilidade']
-                ); 
-                
-                //$this->informacaoPeladeiroE = array_shift($this->informacaoPeladeiroE);
-                unset($this->informacaoPeladeiroE[$aux]);
-            
+                );
+
+                array_shift($this->informacaoPeladeiroE);                
+
                 if($this->selecaoEquipe < ($this->qtdEquipes - 1)):
                     $this->selecaoEquipe++;
+                    $aux = current($this->informacaoPeladeiroE);
                 else:
                     $this->selecaoEquipe = 0;
                     $this->informacaoPeladeiroE = array_reverse($this->informacaoPeladeiroE);
-                endif; 
-                $aux = next($this->informacaoPeladeiroE);
+                    $aux = current($this->informacaoPeladeiroE);
+                endif;
             endfor;
         endif;
     }
 }
-/*
-SAIMON
+/*SAIMON
 ALVIN
 TEODOR
 BRITANI
