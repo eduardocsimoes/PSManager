@@ -92,7 +92,7 @@ class Algoritmo {
         
         return $this->mediaJogadoresEquipes;
     }
-    
+
     private function informacoesJogadores(){
         $agendamento_peladeiro = new Read();
         $agendamento_peladeiro->ExeRead("pelada_agendamento_peladeiro", "WHERE id_agendamento = :idAgendamento", "idAgendamento=".$this->idAgendamento);
@@ -120,8 +120,8 @@ class Algoritmo {
             $idPeladeiro = $this->informacaoPeladeiro[$i]['id'];
         
             $conjuntoHabilidade->ExeRead("peladeiro_habilidade", "WHERE id_peladeiro = :idPeladeiro ORDER BY id_habilidade", "idPeladeiro=".$idPeladeiro);
-            foreach($conjuntoHabilidade->getResult() as $Indice1):
-                extract($Indice1);
+            foreach($conjuntoHabilidade->getResult() as $Indice2):
+                extract($Indice2);
             
                 $this->informacaoPeladeiro[$i]['habilidade'][$id_habilidade] = $nivel;
             endforeach;
@@ -233,7 +233,7 @@ class Algoritmo {
         $this->somaJogadoresEquipe(); 
         
         if($this->algoritmo == 1):
-            for($i=0;$i<count($this->informacaoPeladeiroD);$i++):                
+            /*for($i=0;$i<count($this->informacaoPeladeiroD);$i++):                
                 for($j=$i+1;$j<count($this->informacaoPeladeiroD);$j++):
                     if(($this->informacaoPeladeiroD[$j]['habilidade'][1] > $this->informacaoPeladeiroD[$i]['habilidade'][1])):
                         $arrayAux = $this->informacaoPeladeiroD[$i];
@@ -241,7 +241,7 @@ class Algoritmo {
                         $this->informacaoPeladeiroD[$j] = $arrayAux;
                     endif;
                 endfor;
-            endfor;
+            endfor;*/
             
             $this->informacaoPeladeiroE = $this->informacaoPeladeiroD;            
             
@@ -265,7 +265,7 @@ class Algoritmo {
 
                 //$this->somaJogadoresEquipe();
             endfor;
-*/                      
+*/
 /*
             $aux = current($this->informacaoPeladeiroE);
             for($i=0;$i<18;$i++):            
@@ -288,17 +288,87 @@ class Algoritmo {
                 endif;
             endfor;
  */
-            sort($this->informacaoPeladeiroE[]['habilidade'][1], SORT_NUMERIC);
-/*
-            if(!isset($this->selecaoEquipe)):
-                for($i=0;$i<count($this->qtdEquipes);$i++):
-                    $this->equipes[$this->selecaoEquipe][] = $this->informacaoPeladeiroE[max($this->informacaoPeladeiroE[])]
-                endfor;
-            else:
-                
-            endif;*/
+//            sort($this->informacaoPeladeiroE[]['habilidade'][1], SORT_NUMERIC);
+            for($i=0;$i<18;$i++): 
+                if(!isset($this->equipes)):
+                    for($i=0;$i<$this->qtdEquipes;$i++):
+                        $jogador = $this->maxValorArray($this->informacaoPeladeiroE);
+                        $this->equipes[$i][] = $jogador;
+                        //$this->equipes[$i][] = $this->minValorArray($this->informacaoPeladeiroE);                        
+                        $key = array_keys($jogador);
+                        //$key = array_search($this->informacaoPeladeiroE[$jogador[]['id']]); 
+                        unset($this->informacaoPeladeiroE[$key][0]);
+                    endfor;
+                else:
+
+                endif;
+            endfor;    
         endif;
     }
+    
+    private function minValorArray($array, $arrayExcludente = null){
+        $valor = 0;
+        $valorAnt = 0;
+        $valorFinal = 0;
+
+        if(isset($arrayExcludente)):           
+            array_diff($array,$arrayExcludente);
+        
+            foreach($array as $Indice1):
+                $valor = $Indice1['habilidade'][1];
+                
+                if($valor <= $valorAnt):
+                    $arrayFinal = $Indice1;
+                endif;
+                
+                $valorAnt = $valor;
+            endforeach;
+        else:
+            foreach($array as $Indice1):
+                $valor = $Indice1['habilidade'][1];
+                
+                if($valor <= $valorAnt):
+                    $arrayFinal = $Indice1;
+                endif;
+                
+                $valorAnt = $valor;
+            endforeach;
+        endif;
+        
+        return $arrayFinal;
+    }
+
+    private function maxValorArray($array, $arrayExcludente = null){
+        $valor = 0;
+        $valorAnt = 0;
+        $valorFinal = 0;
+
+        if(isset($arrayExcludente)):           
+            array_diff($array,$arrayExcludente);
+        
+            foreach($array as $Indice1):
+                $valor = $Indice1['habilidade'];
+                
+                if($valor > $valorAnt):
+                    $arrayFinal = $Indice1;
+                endif;
+                
+                $valorAnt = $valor;
+            endforeach;
+        else:
+            foreach($array as $Indice1):
+                $valor = $Indice1['habilidade'][1];
+                
+                if($valor > $valorAnt):
+                    $arrayFinal = $Indice1;
+                endif;
+                
+                $valorAnt = $valor;
+            endforeach;
+        endif;
+        
+        return $arrayFinal;
+    }    
 }
 /*SAIMON
 ALVIN
