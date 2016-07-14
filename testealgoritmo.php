@@ -15,7 +15,7 @@ require('Classes/Config.inc.php');
             //var_dump($peladeiroD);
 
             $peladeiroE = $algoritmo->getInformacaoPeladeiroE();
-            //var_dump($peladeiroE);
+            var_dump($peladeiroE);
             
             $equipes = $algoritmo->getEquipes();
             var_dump($equipes);            

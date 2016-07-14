@@ -293,79 +293,48 @@ class Algoritmo {
                 if(!isset($this->equipes)):
                     for($i=0;$i<$this->qtdEquipes;$i++):
                         $jogador = $this->maxValorArray($this->informacaoPeladeiroE);
-                        $this->equipes[$i][] = $jogador;
-                        //$this->equipes[$i][] = $this->minValorArray($this->informacaoPeladeiroE);                        
-                        $key = array_keys($jogador);
-                        //$key = array_search($this->informacaoPeladeiroE[$jogador[]['id']]); 
-                        unset($this->informacaoPeladeiroE[$key][0]);
+                        $this->equipes[$i][] = $jogador;                        
+                        unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);
                     endfor;
                 else:
-
+                    
                 endif;
             endfor;    
         endif;
     }
     
-    private function minValorArray($array, $arrayExcludente = null){
+    private function minValorArray($array){
         $valor = 0;
         $valorAnt = 0;
         $valorFinal = 0;
 
-        if(isset($arrayExcludente)):           
-            array_diff($array,$arrayExcludente);
-        
-            foreach($array as $Indice1):
-                $valor = $Indice1['habilidade'][1];
-                
-                if($valor <= $valorAnt):
-                    $arrayFinal = $Indice1;
-                endif;
-                
-                $valorAnt = $valor;
-            endforeach;
-        else:
-            foreach($array as $Indice1):
-                $valor = $Indice1['habilidade'][1];
-                
-                if($valor <= $valorAnt):
-                    $arrayFinal = $Indice1;
-                endif;
-                
-                $valorAnt = $valor;
-            endforeach;
-        endif;
+        foreach($array as $Indice1):
+            $valor = $Indice1['habilidade'][1];
+
+            if($valor <= $valorAnt):
+                $arrayFinal = $Indice1;
+            endif;
+
+            $valorAnt = $valor;
+        endforeach;
         
         return $arrayFinal;
     }
 
-    private function maxValorArray($array, $arrayExcludente = null){
+    private function maxValorArray($array){
         $valor = 0;
         $valorAnt = 0;
         $valorFinal = 0;
 
-        if(isset($arrayExcludente)):           
-            array_diff($array,$arrayExcludente);
-        
-            foreach($array as $Indice1):
-                $valor = $Indice1['habilidade'];
-                
-                if($valor > $valorAnt):
-                    $arrayFinal = $Indice1;
-                endif;
-                
-                $valorAnt = $valor;
-            endforeach;
-        else:
-            foreach($array as $Indice1):
-                $valor = $Indice1['habilidade'][1];
-                
-                if($valor > $valorAnt):
-                    $arrayFinal = $Indice1;
-                endif;
-                
-                $valorAnt = $valor;
-            endforeach;
-        endif;
+        foreach($array as $Indice1):
+            $valor = $Indice1['habilidade'][1];
+
+            if($valor > $valorAnt):
+                $arrayFinal[] = array('valor' => $valor, 'valorant' => $valorAnt);
+            endif;
+
+            $valorAnt = $valor;
+        endforeach;
         
         return $arrayFinal;
     }    
