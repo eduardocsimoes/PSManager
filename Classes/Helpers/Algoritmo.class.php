@@ -293,7 +293,7 @@ class Algoritmo {
                 if(!isset($this->equipes)):
                     for($i=0;$i<$this->qtdEquipes;$i++):
                         $jogador = $this->maxValorArray($this->informacaoPeladeiroE);
-                        $this->equipes[$i][] = $jogador;                        
+                        $this->equipes[$i] = $jogador;                        
                         unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);
                     endfor;
                 else:
@@ -302,42 +302,38 @@ class Algoritmo {
             endfor;    
         endif;
     }
-    
-    private function minValorArray($array){
-        $valor = 0;
-        $valorAnt = 0;
-        $valorFinal = 0;
-
-        foreach($array as $Indice1):
-            $valor = $Indice1['habilidade'][1];
-
-            if($valor <= $valorAnt):
-                $arrayFinal = $Indice1;
-            endif;
-
-            $valorAnt = $valor;
-        endforeach;
-        
-        return $arrayFinal;
-    }
 
     private function maxValorArray($array){
         $valor = 0;
-        $valorAnt = 0;
-        $valorFinal = 0;
+        $maiorValor = 0;
 
         foreach($array as $Indice1):
             $valor = $Indice1['habilidade'][1];
 
-            if($valor > $valorAnt):
-                $arrayFinal[] = array('valor' => $valor, 'valorant' => $valorAnt);
+            if($valor > $maiorValor):
+                $maiorValor = $valor;
+                $arrayFinal = $Indice1;
             endif;
-
-            $valorAnt = $valor;
         endforeach;
         
         return $arrayFinal;
-    }    
+    }     
+    
+    private function minValorArray($array){
+        $valor = 0;
+        $menorValor = 0;
+
+        foreach($array as $Indice1):
+            $valor = $Indice1['habilidade'][1];
+
+            if($valor <= $menorValor):
+                $menorValor = $valor;
+                $arrayFinal = $Indice1;
+            endif;
+        endforeach;
+        
+        return $arrayFinal;
+    }   
 }
 /*SAIMON
 ALVIN
