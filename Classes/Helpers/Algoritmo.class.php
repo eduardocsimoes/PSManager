@@ -24,6 +24,7 @@ class Algoritmo {
     private $valorExcedente;
     private $selecaoEquipe;
     private $mediaJogadoresEquipes;
+    private $informacaoGoleiros;
     
     public function escolhaAlgoritmo($Algoritmo){        
         $this->algoritmo = $Algoritmo;        
@@ -31,7 +32,7 @@ class Algoritmo {
         $this->idAgendamento = 1;
         $this->maxEquipes = 3;
         $this->qtdPeladeirosporEquipe = 6;
-        $this->incluirGoleiro = 'S';
+        $this->incluirGoleiro = 'N';
         $this->qtdTotalJogadoresEquipes = 0;
         
         $this->informacoesJogadores();
@@ -78,16 +79,20 @@ class Algoritmo {
     public function getJogadoresExcedentes() {
         return $this->jogadoresExcedentes;
     }
+
+    public function getInformacaoGoleiros() {
+        return $this->informacaoGoleiros;
+    }
     
     public function getMediaJogadoresEquipe(){
         for($i=0;$i<$this->qtdEquipes;$i++):
             for($j=0;$j<count($this->equipes[$i]);$j++):
                 if(isset($this->mediaJogadoresEquipes[$i]['valor'])):
-                    if(isset($this->mediaJogadoresEquipes[$i][$j])):
+                    if(isset($this->equipes[$i][$j])):
                         $this->mediaJogadoresEquipes[$i]['valor'] = (float) $this->mediaJogadoresEquipes[$i]['valor'] + (float) $this->equipes[$i][$j]['habilidade'][1];
                     endif;
                 else:
-                    if(isset($this->mediaJogadoresEquipes[$i][$j])):
+                    if(isset($this->equipes[$i][$j])):
                         $this->mediaJogadoresEquipes[$i]['valor'] = (float) $this->equipes[$i][$j]['habilidade'][1];
                     endif;
                 endif;
@@ -101,10 +106,10 @@ class Algoritmo {
         $agendamento_peladeiro = new Read();
         $agendamento_peladeiro->ExeRead("pelada_agendamento_peladeiro", "WHERE id_agendamento = :idAgendamento", "idAgendamento=".$this->idAgendamento);
         $this->qtdPeladeiros = $agendamento_peladeiro->getRowCount();
-        
+
         foreach ($agendamento_peladeiro->getResult() as $agendamento):
-            extract($agendamento);            
-        
+            extract($agendamento);
+
             $peladeiro = new Read();
             $peladeiro->ExeRead("peladeiro", "WHERE id_peladeiro = :idPeladeiro", "idPeladeiro=".$id_peladeiro);
             
@@ -179,34 +184,30 @@ class Algoritmo {
         endif;  
     }
 
-    private function definirRegrasFormacao(){
-        if (($this->qtdPeladeiros / $this->qtdEquipes) > $this->maxEquipes):
-            $this->temRevesamento = 'S';
-            $this->qtdJogadoresExcedentes = $this->qtdPeladeiros - ($this->maxEquipes * $this->qtdPeladeirosporEquipe);
-        else:
-            $this->temRevesamento = 'N';
-        endif;
-        
-        if ($this->incluirGoleiro == 'S'):
-            //Desenvolver regra para distribuir primeiramente os goleiros
-        else:
-            //Desenvolver regra para distribuir primeiramente os goleiros
-        endif;        
-    }
-
     private function somaJogadoresEquipe(){
         for($e=0;$e<count($this->equipes);$e++):
             $this->qtdTotalJogadoresEquipes += count($this->equipes[$e]);
         endfor;                  
     }
     
-    private function executaAlgoritmo(){        
-        $this->definirRegrasFormacao();
-        
+    private function executaAlgoritmo(){
         $this->informacaoPeladeiroD = $this->informacaoPeladeiro;
         
-        if($this->temRevesamento == 'S'):
+        if($this->incluirGoleiro != 'S'):
+            foreach($this->informacaoPeladeiroD as $retirarGoleiros):
+                if($retirarGoleiros['posicao'] == 1):
+                    $this->informacaoGoleiros[] = $retirarGoleiros;
+                    unset($this->informacaoPeladeiroD[array_search($retirarGoleiros, $this->informacaoPeladeiroD)]);
+                    //$this->informacaoPeladeiroD = array_filter($this->informacaoPeladeiroD);
+                endif;
+            endforeach;
+        endif;
+        
+        if (($this->qtdPeladeiros / $this->qtdEquipes) > $this->maxEquipes):
+            $this->temRevesamento = 'S';
+            $this->qtdJogadoresExcedentes = $this->qtdPeladeiros - ($this->maxEquipes * $this->qtdPeladeirosporEquipe);
             $this->jogadoresExcedentes = array_rand($this->informacaoPeladeiroD, $this->qtdJogadoresExcedentes);
+            
             if(is_array($this->jogadoresExcedentes)):
                 for($j=0;$j<count($this->jogadoresExcedentes);$j++):
                     unset($this->informacaoPeladeiroD[$this->jogadoresExcedentes[$j]]);
@@ -231,7 +232,11 @@ class Algoritmo {
                     unset($this->informacaoPeladeiroD[$i]);
                 endif;
             endfor;
-        endif;    
+        else:
+            $this->temRevesamento = 'N';
+            $this->qtdJogadoresExcedentes = 0;
+            $this->jogadoresExcedentes = null;            
+        endif;
 
         $this->setMediaporEquipe();
         $this->somaJogadoresEquipe(); 
@@ -248,59 +253,14 @@ class Algoritmo {
             endfor;*/
             
             $this->informacaoPeladeiroE = $this->informacaoPeladeiroD;            
-            
-            $this->selecaoEquipe = 0;
-/*            for($i=0;$i<count($this->informacaoPeladeiroE);$i++):
-                $this->equipes[$this->selecaoEquipe][] = array (
-                    'id' => $this->informacaoPeladeiroE[$i]['id'],
-                    'nome' => $this->informacaoPeladeiroE[$i]['nome'],
-                    'posicao' => $this->informacaoPeladeiroE[$i]['posicao'],
-                    'habilidade' => $this->informacaoPeladeiroE[$i]['habilidade']
-                );
-            
-                array_shift($this->informacaoPeladeiroE);
 
-                if($this->selecaoEquipe < ($this->qtdEquipes - 1)):
-                    $this->selecaoEquipe++;
-                else:
-                    $this->selecaoEquipe = 0;
-                    array_reverse($this->informacaoPeladeiroE);
-                endif;
-
-                //$this->somaJogadoresEquipe();
-            endfor;
-*/
-/*
-            $aux = current($this->informacaoPeladeiroE);
-            for($i=0;$i<18;$i++):            
-                $this->equipes[$this->selecaoEquipe][] = array (
-                    'id' => $aux['id'],
-                    'nome' => $aux['nome'],
-                    'posicao' => $aux['posicao'],
-                    'habilidade' => $aux['habilidade']
-                );
-
-                array_shift($this->informacaoPeladeiroE);                
-
-                if($this->selecaoEquipe < ($this->qtdEquipes - 1)):
-                    $this->selecaoEquipe++;
-                    $aux = current($this->informacaoPeladeiroE);
-                else:
-                    $this->selecaoEquipe = 0;
-                    $this->informacaoPeladeiroE = array_reverse($this->informacaoPeladeiroE);
-                    $aux = current($this->informacaoPeladeiroE);
-                endif;
-            endfor;
- */
-//            sort($this->informacaoPeladeiroE[]['habilidade'][1], SORT_NUMERIC);
-            for($j=0;$j<count($this->informacaoPeladeiroE)/$this->qtdEquipes;$j++):
-            //while(isset($this->informacaoPeladeiroE)):                            
-                if(!isset($this->equipes)):
+            while(!empty($this->informacaoPeladeiroE)):                            
+                if(empty($this->equipes)):
                     for($i=0;$i<$this->qtdEquipes;$i++):
-                        $this->informacaoPeladeiroE = array_filter($this->informacaoPeladeiroE);
                         $jogador = $this->maxValorArray($this->informacaoPeladeiroE);
                         $this->equipes[$i][] = $jogador;
-                        unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);                        
+                        unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);
+                        $this->informacaoPeladeiroE = array_filter($this->informacaoPeladeiroE);
                     endfor;
                     
                     $ultFuncao = "max";
@@ -308,29 +268,29 @@ class Algoritmo {
                     if($ultFuncao == "max"):
                         for($i=0;$i<$this->qtdEquipes;$i++):
                             if (isset($this->informacaoPeladeiroE)):
-                                $this->informacaoPeladeiroE = array_filter($this->informacaoPeladeiroE);
                                 $jogador = $this->minValorArray($this->informacaoPeladeiroE);
                                 $this->equipes[$i][] = $jogador;
                                 unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);                                
-                            endif;
+                                $this->informacaoPeladeiroE = array_filter($this->informacaoPeladeiroE);
+                            endif;                            
                         endfor;
                         
                         $ultFuncao = "min";
                     else:
                         for($i=0;$i<$this->qtdEquipes;$i++):
                             if (isset($this->informacaoPeladeiroE)):
-                                $this->informacaoPeladeiroE = array_filter($this->informacaoPeladeiroE);
                                 $jogador = $this->maxValorArray($this->informacaoPeladeiroE);
                                 $this->equipes[$i][] = $jogador;
-                                unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);                                
+                                unset($this->informacaoPeladeiroE[array_search($jogador, $this->informacaoPeladeiroE)]);
+                                $this->informacaoPeladeiroE = array_filter($this->informacaoPeladeiroE);
                             endif;
-                        endfor;                        
-                        
+                        endfor;
+
                         $ultFuncao = "max";
                     endif;
                 endif;
-            //endwhile;
-            endfor;
+            endwhile;
+            //endfor;
         endif;
     }
 
@@ -341,7 +301,7 @@ class Algoritmo {
         foreach($array as $Indice1):
             $valor = $Indice1['habilidade'][1];
 
-            if($valor > $maiorValor):
+            if(($valor > $maiorValor)):
                 $maiorValor = $valor;
                 $arrayFinal = $Indice1;
             endif;
@@ -352,14 +312,14 @@ class Algoritmo {
     
     private function minValorArray($array){
         $valor = 0;
-        $menorValor = 0;
+        $menorValor = -1;
 
         foreach($array as $Indice1):
             $valor = $Indice1['habilidade'][1];
 
-            if($valor <= $menorValor):
+            if(($valor <= $menorValor) || $menorValor = -1):
                 $menorValor = $valor;
-                $arrayFinal = $Indice1;
+                $arrayFinal = $Indice1;                
             endif;
         endforeach;
         
