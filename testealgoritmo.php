@@ -22,8 +22,8 @@ require('Classes/Config.inc.php');
                                  
             /*$qtdEquipes = $algoritmo->getQtdEquipes();
             var_dump($qtdEquipes);*/
-            $qtdJogadores = $algoritmo->getQtdJogadores();
-            var_dump($qtdJogadores);
+            /*$qtdJogadores = $algoritmo->getQtdJogadores();
+            var_dump($qtdJogadores);*/
             $jogadoresExcedentes = $algoritmo->getJogadoresExcedentes();
             var_dump($jogadoresExcedentes);
             $informacaoGoleiros = $algoritmo->getInformacaoGoleiros();

@@ -1,4 +1,4 @@
-        <nav>
+        <nav class="menu-principal">
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="pelada.php">Pelada</a></li>

@@ -11,6 +11,18 @@ define('MAILPASS', 'senhadoemail');
 define('MAILPORT', 'postadeenvio');
 define('MAILHOST', 'servidordeenvio');
 
+// DEFINE IDENTIDADE DO SITE ################
+define('SITENAME', 'PSManager');
+define('SITEDESC', 'Este site foi desenvolvido por Eduardo Simões. O mesmo utiliza a arquitetura semântica do HTML5 e foi criado com as últimas técnologias disponíveis!');
+
+// DEFINE A BASE DO SITE ####################
+define('HOME', 'http://localhost:8080/psmanager');
+define('THEME', 'psmanager');
+
+//define('INCLUDE_PATH', HOME . '/' . THEME);
+define('INCLUDE_PATH', HOME);
+define('REQUIRE_PATH', '/' . THEME);
+
 // AUTO LOAD DE CLASSES ####################
 function __autoload($Class) {
 
