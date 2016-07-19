@@ -2,16 +2,20 @@ $(document).ready(function(){
     var menuAtivo = $('.top .active').attr('id');
 
     $('.btncadastrarusuario').click(function(){
-        var alturaInicio = 0;
-        var tempoMenu = 500;
+        var alturaInicioFundo = 0;
+        var alturaInicio = window.innerHeight * 0.1;
+        var tempoModalFundo = 1;
+        var tempoModal = 500;
         
-        $('.modalcadastro').animate({top: alturaInicio},tempoMenu);
+        $('.modalcadastro').animate({top: alturaInicioFundo},tempoModalFundo);
+        $('.modal_cadastro').animate({top: alturaInicio},tempoModal);
     });
     
     $('.btnfecharcadastro').click(function(){
-        var alturaFim = window.innerHeight + (window.innerHeight * 0.01);        
-        var tempoMenu = 500;
-        
-        $('.modalcadastro').animate({top: alturaFim},tempoMenu);
+        var alturaFim = window.innerHeight + (window.innerHeight * 0.01);
+        var tempoModal = 500;
+
+        $('.modalcadastro').animate({top: alturaFim},tempoModal);
+        $('.modal_cadastro').animate({top: alturaFim},tempoModal);
     });         
 });

@@ -23,13 +23,14 @@
 .controleusuario .auxiliar label{
     margin-right: 60px;
     margin-left: 3px;
+    color: #63b8ee;
 }
 .controleusuario .auxiliar a{
     text-decoration: none;
-    color: midnightblue;
+    color: #63b8ee;
 }
 .controleusuario .auxiliar a:hover{
-    color: blue;
+    color: #14396a;
 }
 .controleusuario .cadastro button {
         float: right;
@@ -80,21 +81,31 @@
     background-color: rgba(0,0,0,0);    
 }
 .modal_cadastro{    
+    position: fixed;
+    //display: none;    
+    z-index: 2; 
+    left: 30%;
+    top: 101%;
+    width: 40%;
+    height: 80%; 
+    background-color: rgba(0,0,0,0.7);    
+}
+/*.modal_cadastro{    
     position: absolute;
     left: 30%;
     top: 10%;
     width: 40%;
     height: 80%;   
-    background-color: rgba(0,0,0,0.4);    
-}
+    background-color: rgba(0,0,0,0.7);    
+}*/
 .modal_cadastro .modal-body{
     display: inline-block;
 }
-.modalcadastro .btnfecharcadastro{
+.modal_cadastro .btnfecharcadastro{
     float: right;
     color: darkred;
 }
-.modalcadastro .btnfecharcadastro:hover{
+.modal_cadastro .btnfecharcadastro:hover{
     cursor: pointer;
     color: red;
 }
