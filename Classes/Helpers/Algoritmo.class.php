@@ -19,6 +19,7 @@ class Algoritmo {
     private $incluirGoleiro;
     private $equipes;
     private $jogadoresExcedentes;
+    private $jogadoresExcedentesAux;
     private $qtdJogadoresExcedentes;
     private $temRevesamento;
     private $valorExcedente;
@@ -198,24 +199,28 @@ class Algoritmo {
                 if($retirarGoleiros['posicao'] == 1):
                     $this->informacaoGoleiros[] = $retirarGoleiros;
                     unset($this->informacaoPeladeiroD[array_search($retirarGoleiros, $this->informacaoPeladeiroD)]);
-                    //$this->informacaoPeladeiroD = array_filter($this->informacaoPeladeiroD);
                 endif;
             endforeach;
         endif;
         
-        if (($this->qtdPeladeiros / $this->qtdEquipes) > $this->maxEquipes):
+        //if (($this->qtdPeladeiros / $this->qtdEquipes) > $this->maxEquipes):
+        if((count($this->informacaoPeladeiroD) / $this->qtdEquipes) > $this->maxEquipes):
             $this->temRevesamento = 'S';
-            $this->qtdJogadoresExcedentes = $this->qtdPeladeiros - ($this->maxEquipes * $this->qtdPeladeirosporEquipe);
-            $this->jogadoresExcedentes = array_rand($this->informacaoPeladeiroD, $this->qtdJogadoresExcedentes);
-            
-            if(is_array($this->jogadoresExcedentes)):
-                for($j=0;$j<count($this->jogadoresExcedentes);$j++):
-                    unset($this->informacaoPeladeiroD[$this->jogadoresExcedentes[$j]]);
+            //$this->qtdJogadoresExcedentes = $this->qtdPeladeiros - ($this->maxEquipes * $this->qtdPeladeirosporEquipe);
+            $this->qtdJogadoresExcedentes = count($this->informacaoPeladeiroD) - ($this->maxEquipes * $this->qtdPeladeirosporEquipe);
+        
+            $this->jogadoresExcedentesAux = array_rand($this->informacaoPeladeiroD, $this->qtdJogadoresExcedentes);
+
+            if(is_array($this->jogadoresExcedentesAux)):
+                for($j=0;$j<count($this->jogadoresExcedentesAux);$j++):
+                    $this->jogadoresExcedentes[] = $this->informacaoPeladeiroD[$this->jogadoresExcedentesAux[$j]];
+                    unset($this->informacaoPeladeiroD[$this->jogadoresExcedentesAux[$j]]);
                 endfor;                
             else:
-                unset($this->informacaoPeladeiroD[$this->jogadoresExcedentes]);            
+                $this->jogadoresExcedentes[] = $this->informacaoPeladeiroD[$this->jogadoresExcedentesAux];
+                unset($this->informacaoPeladeiroD[$this->jogadoresExcedentesAux]);            
             endif;
-            
+
             for($i=0;$i<=max(array_keys($this->informacaoPeladeiroD));$i++):                
                 $isEmpty = null;
             
