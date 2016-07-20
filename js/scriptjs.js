@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     $('.btncadastrarusuario').click(function(){
         var alturaInicioFundo = 0;
-        var alturaInicio = window.innerHeight * 0.1;
+        var alturaInicio = window.innerHeight * 0.2;
         var tempoModalFundo = 1;
         var tempoModal = 500;
         

@@ -2,9 +2,9 @@
     <!-- Modal content -->    
 </div>
     <div class="modal_cadastro">
-        <div class="btnfecharcadastro">X</div>
+        <img src="ico/close1.png" class="btnfecharcadastro" width="20px" height="20px">
         <div class="modal-head">
-            <label>Crie sua Conta</label>
+            <label>CRIE SUA CONTA</label>
         </div>
         <div class="modal-body">
             <input type="text" name="firstname" placeholder="Primeiro Nome" required="required" /><br />
@@ -27,7 +27,8 @@
                     endif;
                 ?>
             </select><br />    
-
+            <input type="checkbox" name="terms" value="1" /><label>Eu aceito os <a href="#" class="terms">Termos e Condições</a> e as <a href="#" class="terms">Políticas de Privacidade</a></label>
+            
             <input type="submit" name="submitPeladeiro" value="Cadastrar" />
         </div>
     </div>

@@ -1,52 +1,52 @@
 .body_home{
-    background: url(../img/campo1.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    //background:url(../img/campo1.jpg) no-repeat center center fixed; 
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
 }
 .menu-principal{
-    position: absolute;
+    position:absolute;
 }
 .no-select {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    -o-user-select:none;
+    user-select:none;
 }
 .controleusuario{
-    position: relative;
-    float: right;
-    display: block;
-    margin: 50px 100px 0px 0px;
+    position:relative;
+    float:right;
+    display:block;
+    margin:50px 100px 0px 0px;
 }
 .controleusuario input{
-    margin-right: 1px;
+    margin-right:1px;
 }
 .controleusuario .auxiliar{
-    margin-top: 5px;
+    margin-top:5px;
 }
 .controleusuario .auxiliar label{
-    margin-right: 90px;
-    margin-left: 3px;
-    color: #63b8ee;
+    margin-right:90px;
+    margin-left:3px;
+    color:#63b8ee;
 }
 .controleusuario .auxiliar label:hover{
-    color: #14396a;
+    color:#14396a;
 }
 .controleusuario .auxiliar a{
     text-decoration: none;
-    color: #63b8ee;
+    color:#63b8ee;
 }
 .controleusuario .auxiliar a:hover{
-    color: #14396a;
+    color:#14396a;
 }
 .controleusuario .cadastro button {
-    float: right;
-    margin-top: 20px;
+    float:right;
+    margin-top:20px;
     font-size:20px;
     font-family:Arial Black;
     font-weight:normal;
@@ -77,7 +77,7 @@
 }
 .controleusuario .cadastro button:active {
     position:relative;
-    top:5px;
+    top:3px;
 }
 .controleusuario .btnentrar {
     font-size:12px;
@@ -110,53 +110,128 @@
 }
 .controleusuario .btnentrar:active {
     position:relative;
-    top:1px;
+    top:3px;
 }
 .inputs{
-    width: 200px;
-    height: 25px;
+    width:200px;
+    height:25px;
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;    
-    color: gray;
-    font-family: "arial", "verdana", "sans-serif";
-    font-size: 14px;
+    color:gray;
+    font-family:"arial", "verdana", "sans-serif";
+    font-size:14px;
 }
 .modalcadastro {
-    position: fixed;
-    z-index: 2; 
-    left: 0;
-    top: 101%;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: rgba(0,0,0,0);    
+    position:fixed;
+    z-index:2; 
+    left:0;
+    top:101%;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background-color:rgba(0,0,0,0);    
 }
 .modal_cadastro{    
-    position: fixed;
-    z-index: 2; 
-    left: 30%;
-    top: 101%;
-    width: 40%;
-    height: 80%; 
-    background-color: rgba(0,0,0,0.7);    
+    position:fixed;
+    z-index:2; 
+    left:34%;
+    top:101%;
+    width:32%;
+    height:60%; 
+    background-color:#353535;
+    
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;    
 }
-/*.modal_cadastro{    
-    position: absolute;
-    left: 30%;
-    top: 10%;
-    width: 40%;
-    height: 80%;   
-    background-color: rgba(0,0,0,0.7);    
-}*/
 .modal_cadastro .modal-body{
-    display: inline-block;
+    display:inline-block;
 }
 .modal_cadastro .btnfecharcadastro{
-    float: right;
-    color: darkred;
+    float:right;
 }
 .modal_cadastro .btnfecharcadastro:hover{
-    cursor: pointer;
-    color: red;
+    cursor:pointer;
+}
+.modal_cadastro .modal-head{
+    padding:20px;
+    font-family:"Times New Roman";
+    font-size:20px;
+    text-align:center;
+    color:#ffffff;
+}
+.modal_cadastro .modal-body input[type="text"],
+.modal_cadastro .modal-body input[type="email"],
+.modal_cadastro .modal-body input[type="date"],
+.modal_cadastro .modal-body select{
+    width:355px;
+    height:25px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    color:grey;
+    font-family:"arial", "verdana", "sans-serif";
+    font-size:14px;
+    margin:0 25px 10px 25px;
+}
+.modal_cadastro .modal-body input[type="text"]:focus,
+.modal_cadastro .modal-body input[type="email"]:focus,
+.modal_cadastro .modal-body input[type="date"]:focus,
+.modal_cadastro .modal-body select:focus{
+    background-color:#555555;
+    color:#ffffff;
+}
+.modal_cadastro .modal-body input[type="checkbox"]{
+    font-size:10px;
+    margin:0 5px 0px 25px;
+}
+.modal_cadastro .modal-body label{
+    text-decoration:none;
+    font-size:12px;
+    color:#ffffff;
+}
+.modal_cadastro .modal-body .terms{
+    text-decoration:none;
+    font-size:12px;
+    color:#63b8ee;
+}
+.modal_cadastro .modal-body .terms:hover{
+    color:#14396a;
+}
+.modal_cadastro .modal-body input[type="submit"] {
+    float:right;
+    margin-top:20px;
+    font-size:16px;
+    font-family:Arial Black;
+    font-weight:normal;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #3866a3;
+    padding:10px 40px;
+    margin:10px 25px 10px 25px;
+    text-decoration:none;
+    background:-moz-linear-gradient( center top, #63b8ee 5%, #468ccf 100% );
+    background:-ms-linear-gradient( top, #63b8ee 5%, #468ccf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b8ee', endColorstr='#468ccf');
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(5%, #63b8ee), color-stop(100%, #468ccf) );
+    background-color:#63b8ee;
+    color:#14396a;
+    display:inline-block;
+    text-shadow:1px 1px 0px #7cacde;
+    -webkit-box-shadow:inset 1px 1px 0px 0px #bee2f9;
+    -moz-box-shadow:inset 1px 1px 0px 0px #bee2f9;
+    box-shadow:inset 1px 1px 0px 0px #bee2f9;
+}
+.modal_cadastro .modal-body input[type="submit"]:hover {
+    background:-moz-linear-gradient( center top, #468ccf 5%, #63b8ee 100% );
+    background:-ms-linear-gradient( top, #468ccf 5%, #63b8ee 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#468ccf', endColorstr='#63b8ee');
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(5%, #468ccf), color-stop(100%, #63b8ee) );
+    background-color:#468ccf;
+}
+.modal_cadastro .modal-body input[type="submit"]:active {
+    position:relative;
+    top:2px;
 }
