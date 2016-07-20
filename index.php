@@ -12,16 +12,16 @@ require('./Classes/Config.inc.php');
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
         <script type="text/javascript" src="<?= INCLUDE_PATH; ?>/js/scriptjs.js"></script>
     </head>    
-    <body class="body_home">
+    <body class="body_home no-select">
         <?php
             require('inc/nav.php');
         ?>
 
         <div class="controleusuario">
             <form class="formcontroleusuario" method="POST" action="">
-                <input type="email" name="email" placeholder="Digite seu E-Mail" />
-                <input type="password" name="pass" placeholder="Digite sua Senha" />
-                <input type="submit" name="logar" value="Entrar">
+                <input type="email" name="email" class="inputs" placeholder="E-Mail" />
+                <input type="password" name="pass" class="inputs" placeholder="Senha" />
+                <input type="submit" name="logar" class="btnentrar" value="Entrar">
             </form>
             
             <div class="auxiliar">

@@ -17,5 +17,20 @@ $(document).ready(function(){
 
         $('.modalcadastro').animate({top: alturaFim},tempoModal);
         $('.modal_cadastro').animate({top: alturaFim},tempoModal);
-    });         
+    }); 
+    
+    $('.auxiliar label').click(function(){
+        var checked = $('.manterlogado').attr('checked');
+        
+        if(checked != 'checked'){
+            $('.manterlogado').attr('checked','checked');
+        }
+        else{
+            $('.manterlogado').removeAttr('checked');
+        }
+        /*
+        $('.seuCheckbox').attr('checked','checked');
+        //desmarcar
+        $('.seuCheckbox').removeAttr('checked');*/
+    });
 });
