@@ -79,3 +79,10 @@ create table pelada_agendamento_equipe(
     id_peladeiro bigint not null,
     primary key(id_equipe)
 );
+
+create table controle_usuarios(
+	id_peladeiro bigint not null auto_increment,
+    login varchar(50) not null,
+    pass varchar(50) not null,
+	primary key(id_peladeiro)
+);
