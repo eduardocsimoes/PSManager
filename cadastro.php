@@ -8,12 +8,12 @@
         </div>
         <div class="modal-body">
             <form method="POST" class="formcadastrousuario" action="">
-                <input type="text" name="firstname" placeholder="Primeiro Nome" required="required" /><br />
-                <input type="text" name="secondname" placeholder="Segundo Nome" required="required" /><br />
-                <input type="text" name="nickname" placeholder="Apelido" required="required" /><br />
+                <input type="text" name="nome" placeholder="Primeiro Nome" required="required" /><br />
+                <input type="text" name="sobrenome" placeholder="Segundo Nome" required="required" /><br />
+                <input type="text" name="apelido" placeholder="Apelido" required="required" /><br />
                 <input type="email" name="email" value="" placeholder="E-mail" required="required" /><br />
                 <input type="date" name="data_nascimento" value="" placeholder="Data de Nascimento" required="required" /><br />            
-                <select name="position" required="required">
+                <select name="posicao_predominante" required="required">
                     <option value="-1" selected="selected" disabled="disabled">Selecione Posição</option>
                     <?php 
                         $posicao = new Read();
@@ -27,7 +27,9 @@
                             WSErro('Desculpe, não existem posições cadastradas!', WS_INFOR);
                         endif;
                     ?>
-                </select><br />    
+                </select><br />
+                <input type="password" name="pass" placeholder="Digite sua Senha" /><br />
+                <input type="text" name="lembrete" placeholder="Lembrete da Senha" required="required" /><br />
                 <input type="checkbox" name="terms" value="1" /><label>Eu aceito os <a href="#" class="terms">Termos e Condições</a> e as <a href="#" class="terms">Políticas de Privacidade</a></label>
 
                 <input type="submit" name="submitPeladeiro" value="Cadastrar" />
