@@ -1,6 +1,6 @@
 <?php
     require('./Classes/Config.inc.php');
-    $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 ?>
 
 <!DOCTYPE Html>
@@ -16,25 +16,34 @@
     <body class="body_home no-select">
 
         <?php
-            if($data['submitPeladeiro'] == 'cadastrar'):
-                $dados['data_cadastro'] = date('Y-m-d');
-                $dados['nome_peladeiro'] = $dados['nome'] . ' ' . $dados['sobrenome'];
-
+            if($dados['submitPeladeiro'] == 'Cadastrar'):
+                $peladeiro = array(
+                    'nome' => $dados['nome'],
+                    'sobrenome' => $dados['sobrenome'],
+                    'nome_peladeiro' => $dados['nome'] . ' ' . $dados['sobrenome'],
+                    'apelido' => $dados['apelido'],
+                    'email' => $dados['email'],
+                    'data_nascimento' => $dados['data_nascimento'],
+                    'posicao_predominante' => $dados['posicao_predominante'],
+                    'pass' => $dados['pass'],
+                    'lembrete' => $dados['lembrete'],
+                    'data_cadastro' => date('Y-m-d')
+                );
+                
                 $cadastro = new Read();
 
-                $cadastro->ExeRead('peladeiro', 'WHERE email = :email', 'email='.$data['email']);
-                echo 'teste';
+                $cadastro->ExeRead('peladeiro', 'WHERE email = :email', 'email='.$peladeiro['email']);
                 if($cadastro->getResult()):
                     WS_ERROR('Já existe um usuário cadastrado com este E-mail!', WS_ERROR);
                 else:
                     $create = new Create();
-                    $create->ExeCreate('peladeiro', $dados);
+                    $create->ExeCreate('peladeiro', $peladeiro);
                     if($create->getResult()):
                         echo 'true';
-                        WS_ERROR('Peladeiro cadatrado com sucesso! Favor verificar o seu e-mail.', WS_INFOR);
+                        //WS_ERROR('Peladeiro cadatrado com sucesso! Favor verificar o seu e-mail.', WS_INFOR);
                     else:
                         echo 'false';
-                        WS_ERROR('Peladeiro não cadatrado!', WS_ERROR);
+                        //WS_ERROR('Peladeiro não cadatrado!', WS_ERROR);
                     endif;
                 endif;
             endif;        
