@@ -16,7 +16,7 @@
     <body class="body_home no-select">
 
         <?php
-            if($dados['submitPeladeiro'] == 'Cadastrar'):
+            /*if($dados['submitPeladeiro'] == 'Cadastrar'):
                 $peladeiro = array(
                     'nome' => $dados['nome'],
                     'sobrenome' => $dados['sobrenome'],
@@ -46,7 +46,7 @@
                         //WS_ERROR('Peladeiro não cadatrado!', WS_ERROR);
                     endif;
                 endif;
-            endif;        
+            endif;        */
         ?>
         
         <div class="controleusuario">

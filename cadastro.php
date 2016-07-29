@@ -5,6 +5,7 @@
         <img src="ico/close1.png" class="btnfecharcadastro" width="20px" height="20px">
         <div class="modal-head">
             <label>CRIE SUA CONTA</label>
+            <id class="modal-head-box"><?php if(isset($peladeiro)): var_dump($peladeiro); endif; ?></id>
         </div>
         <div class="modal-body">
             <form method="POST" class="formcadastrousuario" action="">
@@ -32,7 +33,7 @@
                 <input type="text" name="lembrete" placeholder="Lembrete da Senha" required="required" /><br />
                 <input type="checkbox" name="terms" value="1" /><label>Eu aceito os <a href="#" class="terms">Termos e Condições</a> e as <a href="#" class="terms">Políticas de Privacidade</a></label>
 
-                <input type="submit" name="submitPeladeiro" value="Cadastrar" />
+                <input type="button" name="submitPeladeiro" value="Cadastrar" />
             </form>
         </div>
     </div>
