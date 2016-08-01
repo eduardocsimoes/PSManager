@@ -50,10 +50,10 @@ $(document).ready(function(){
         
         $.ajax({ 
             type: "POST", 
-            url: "CadastroUsuario.php", 
+            url: "cadastrousuario.php", 
             data: dados, 
             success: function(data) {                 
-                alert(dados);               
+                //alert(dados);               
             }
         }); 
         return false;
