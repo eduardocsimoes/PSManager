@@ -26,11 +26,9 @@
         else:
             $create = new Create();
             $create->ExeCreate('peladeiro', $peladeiro);
-            if($create->getResult()):
-                $returnCreate = true;
+            if($create->getResult()):                
                 WSErro('Peladeiro cadatrado com sucesso! Favor verificar o seu e-mail.', WS_ACCEPT);
             else:
-                $returnCreate = false;
                 WSErro('Peladeiro não cadatrado!', WS_ERROR);
             endif;
         endif;

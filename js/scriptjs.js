@@ -36,27 +36,19 @@ $(document).ready(function(){
         //desmarcar
         $('.seuCheckbox').removeAttr('checked');*/
     });
-/*    
-    $('.formcadastrousuario').submit(function(){
-        if(modalCadastro){
-            alert('teste');
-            $('.modalcadastro').css('top').val(0);
-            $('.modal_cadastro').css('top').val(window.innerHeight * 0.2);
-        }
-    });*/
     
-    $('input[name="submitPeladeiro"]').click(function(){ 
+    $('input[name="submitPeladeiro"]').click(function(){
         var dados = $('.formcadastrousuario').serialize();
         
-        $.ajax({ 
-            type: "POST", 
-            url: "cadastrousuario.php", 
-            data: dados, 
-            success: function(data) {                 
-                //alert(dados);               
+        $.ajax({
+            type: "POST",
+            url: "cadastrousuario.php",
+            data: dados,
+            success: function(retorno) {
+                //alert(retorno);
+                $(".modal-head-msg").html(retorno);
             }
         }); 
         return false;
-        //$('.modal-head-box').load('http://localhost:8080/psmanager/CadastroUsuario.php');
     });    
 });
