@@ -6,7 +6,7 @@
     $dados['submitPeladeiro'] = 'Cadastrar';
     
     if($dados['submitPeladeiro'] == 'Cadastrar'):
-        $peladeiro = array(
+/*        $peladeiro = array(
             'nome' => $dados['nome'],
             'sobrenome' => $dados['sobrenome'],
             'nome_peladeiro' => $dados['nome'] . ' ' . $dados['sobrenome'],
@@ -17,12 +17,25 @@
             'pass' => $dados['pass'],
             'lembrete' => $dados['lembrete'],
             'data_cadastro' => date('Y-m-d')
+        );*/
+        
+        $peladeiro = array(
+            'nome' => 'Nilton',
+            'sobrenome' => 'Simões',
+            'nome_peladeiro' => 'Nilton Simões',
+            'apelido' => 'Niltinho',
+            'email' => 'niltinhosf@gmail.com',
+            'data_nascimento' => date('Y-m-d'),
+            'posicao_predominante' => 1,
+            'pass' => '1234',
+            'lembrete' => '1234',
+            'data_cadastro' => date('Y-m-d')
         );
         
         $cadastro = new Read();
         $cadastro->ExeRead('peladeiro', 'WHERE email = :email', 'email='.$peladeiro['email']);
         if($cadastro->getResult()):
-            WSErro('Já existe um usuário cadastrado com este E-mail!', WS_ERROR);           
+            WSErro('Peladeiro já cadastrado com este E-mail!', WS_ERROR);           
         else:
             $create = new Create();
             $create->ExeCreate('peladeiro', $peladeiro);
