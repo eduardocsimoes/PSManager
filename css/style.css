@@ -144,7 +144,7 @@
 }
 .modal_cadastro{    
     position:fixed;
-    z-index:2; 
+    z-index:3; 
     left:34%;
     top:101%;
     width:32%;
@@ -160,25 +160,29 @@
     display:inline-block;
 }
 .modal_cadastro .btnfecharcadastro{
+    position:relative;
     float:right;
+    z-index:1;
 }
 .modal_cadastro .btnfecharcadastro:hover{
     cursor:pointer;
 }
 .modal_cadastro .modal-head{
+    position:relative;
+    display:float;
     padding:20px 20px 20px 20px;
     font-family:"Times New Roman";
     font-size:20px;
     text-align:center;
     color:#ffffff;
-    display:float;
-    position:relative;
 }
-.modal_cadastro .modal-head-msg{ 
-    left:20%;
-    position: relative;
+.modal_cadastro .modal-head-msg{
+    left:1%;
+    position: absolute;
+    width:60%;
+    height:10%;    
 }
-.modal_cadastro .modal-head-box{ 
+.modal_cadastro .modal-head-box{
     //position:absolute;
     padding:0px 0px 0px 0px;
 }

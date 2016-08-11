@@ -25,7 +25,7 @@
             <div class="auxiliar">
                 <input type="checkbox" class="manterlogado" value="1" /><label>Manter Logado</label>
                 <a href="#">Lembrar Senha</a>
-            </div>  
+            </div>
             
             <div class="cadastro">
                 <button name="cadastre" class="btncadastrarusuario">CADASTRE-SE</button>
@@ -35,12 +35,12 @@
                     <!-- Modal content -->    
                 </div>
                 <div class="modal_cadastro">
-                    <img src="ico/close1.png" class="btnfecharcadastro" width="20px" height="20px">                    
+                    <div class="btnfecharcadastro">
+                        <img src="ico/close1.png" width="20px" height="20px">
+                    </div>    
                     <div class="modal-head">
                         <label>CRIE SUA CONTA</label>                        
                     </div>                    
-                    <div class="modal-head-box"></div>
-                    <div class="modal-head-msg"></div>
                     <div class="modal-body">
                         <form method="POST" class="formcadastrousuario" action="">
                             <input type="text" name="nome" placeholder="Primeiro Nome" required="required" /><br />
@@ -63,12 +63,15 @@
                                     endif;
                                 ?>
                             </select><br />
-                            <input type="password" name="pass" placeholder="Digite sua Senha" /><br />
+                            <input type="password" name="pass" placeholder="Digite sua Senha" required="required" /><br />
                             <input type="text" name="lembrete" placeholder="Lembrete da Senha" required="required" /><br />
                             <input type="checkbox" name="terms" value="1" /><label>Eu aceito os <a href="#" class="terms">Termos e Condições</a> e as <a href="#" class="terms">Políticas de Privacidade</a></label>
-
+                            
+                            <div class="modal-head-box"></div>
+                            <div class="modal-head-msg"></div>
+                            
                             <input type="submit" name="submitPeladeiro" value="Cadastrar" />
-                            <div><?php echo $dados['submitPeladeiro']; ?></div>
+                            
                         </form>
                     </div>                   
                 </div>
