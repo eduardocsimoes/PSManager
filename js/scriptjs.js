@@ -1,6 +1,21 @@
 $(document).ready(function(){    
     var menuAtivo = $('.top .active').attr('id');
     var modalCadastro;
+ 
+    $('input[name="submitLogar"]').click(function(){
+        var dados = $('.formcontroleusuario').serialize();
+        
+        $.ajax({
+            type: "POST",
+            url: "loginusuario.php",
+            data: dados,
+            success: function(retorno) {
+                //alert(retorno);
+                $(".controleusario-form-msg").html(retorno);
+            }
+        }); 
+        return false;
+    });   
     
     $('.btncadastrarusuario').click(function(){
         var alturaInicioFundo = 0;
@@ -10,7 +25,10 @@ $(document).ready(function(){
         modalCadastro = true;
         
         $('.modalcadastro').animate({top: alturaInicioFundo},tempoModalFundo);
-        $('.modal_cadastro').animate({top: alturaInicio},tempoModal);                
+        $('.modal_cadastro').animate({top: alturaInicio},tempoModal);     
+        
+        $('.formcontroleusuario').trigger("reset");
+        $('.controleusario-form-msg').html('');
     });
     
     $('.btnfecharcadastro').click(function(){
@@ -20,6 +38,9 @@ $(document).ready(function(){
 
         $('.modalcadastro').animate({top: alturaFim},tempoModal);
         $('.modal_cadastro').animate({top: alturaFim},tempoModal);
+
+        $('.formcadastrousuario').trigger("reset");
+        $('.modal-head-msg').html('');
     }); 
     
     $('.auxiliar label').click(function(){

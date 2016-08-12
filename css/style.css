@@ -9,7 +9,7 @@
     position:absolute;
 }
 /*MENSAGENS DO SISTEM*/
-.trigger{padding: 15px 15px 15px 40px; background: #eee; font-size: 14px; margin-bottom: 15px; position: absolute;}
+.trigger{padding: 15px 15px 15px 40px; background: #eee; font-size: 14px; margin: 5px 0px 0px 0px; position: absolute;}
 .trigger a{font-weight: 600; font-size: 12px; text-transform: uppercase; padding: 5px 15px; background: #069; color: #fff;}
 .trigger a:hover{background: #09f; color: #fff;}
 
@@ -240,7 +240,7 @@
     -webkit-border-radius:6px;
     border-radius:6px;
     border:1px solid #3866a3;
-    padding:10px 40px;
+    padding:15px 21px;
     margin:10px 25px 10px 25px;
     text-decoration:none;
     background:-moz-linear-gradient( center top, #63b8ee 5%, #468ccf 100% );

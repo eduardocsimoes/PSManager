@@ -3,10 +3,10 @@
     
     $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     
-    $dados['submitPeladeiro'] = 'Cadastrar';
+    $dados['submitPeladeiro'] = 'Cadastrar';   
     
-    if($dados['submitPeladeiro'] == 'Cadastrar'):
-/*        $peladeiro = array(
+    if(($dados['submitPeladeiro'] == 'Cadastrar') and (isset($dados['terms']))):
+        $peladeiro = array(
             'nome' => $dados['nome'],
             'sobrenome' => $dados['sobrenome'],
             'nome_peladeiro' => $dados['nome'] . ' ' . $dados['sobrenome'],
@@ -17,9 +17,9 @@
             'pass' => $dados['pass'],
             'lembrete' => $dados['lembrete'],
             'data_cadastro' => date('Y-m-d')
-        );*/
+        );
         
-        $peladeiro = array(
+/*        $peladeiro = array(
             'nome' => 'Nilton',
             'sobrenome' => 'Simões',
             'nome_peladeiro' => 'Nilton Simões',
@@ -31,7 +31,8 @@
             'lembrete' => '1234',
             'data_cadastro' => date('Y-m-d')
         );
-        
+*/
+    
         $cadastro = new Read();
         $cadastro->ExeRead('peladeiro', 'WHERE email = :email', 'email='.$peladeiro['email']);
         if($cadastro->getResult()):
@@ -45,5 +46,7 @@
                 WSErro('Peladeiro não cadatrado!', WS_ERROR);
             endif;
         endif;
+    else:
+        WSErro('Os termos, condições e políticas não foram aceitos!', WS_ALERT);
     endif;         
 ?>

@@ -1,6 +1,6 @@
 <?php
     require('./Classes/Config.inc.php');
-    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);      
 ?>
 
 <!DOCTYPE Html>
@@ -17,9 +17,9 @@
         
         <div class="controleusuario">
             <form class="formcontroleusuario" method="POST" action="">
-                <input type="email" name="email" class="inputs" placeholder="E-Mail" />
-                <input type="password" name="pass" class="inputs" placeholder="Senha" />
-                <input type="submit" name="logar" class="btnentrar" value="Entrar">
+                <input type="email" name="email" class="inputs" placeholder="E-Mail" required="required" />
+                <input type="password" name="pass" class="inputs" placeholder="Senha" required="required" />                
+                <input type="submit" name="submitLogar" class="btnentrar" value="Entrar">
             </form>
             
             <div class="auxiliar">
@@ -29,7 +29,7 @@
             
             <div class="cadastro">
                 <button name="cadastre" class="btncadastrarusuario">CADASTRE-SE</button>
-                <div class="formcadastro">                  
+                <div class="controleusario-form-msg"></div>                 
                     
                 <div class="modalcadastro">
                     <!-- Modal content -->    
@@ -67,7 +67,7 @@
                             <input type="text" name="lembrete" placeholder="Lembrete da Senha" required="required" /><br />
                             <input type="checkbox" name="terms" value="1" /><label>Eu aceito os <a href="#" class="terms">Termos e Condições</a> e as <a href="#" class="terms">Políticas de Privacidade</a></label>
                             
-                            <div class="modal-head-box"></div>
+
                             <div class="modal-head-msg"></div>
                             
                             <input type="submit" name="submitPeladeiro" value="Cadastrar" />
