@@ -1,6 +1,6 @@
         <nav class="menu-principal">
             <ul>
-                <li><a href="index.php">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="pelada.php">Pelada</a></li>
                 <li><a href="peladeiro.php">Peladeiro</a></li>
                 <li><a href="peladapeladeiro.php">Pelada x Peladeiro</a></li>
@@ -11,5 +11,6 @@
                 <li><a href="peladaagendamento.php">Pelada x Agendamento</a></li>
                 <li><a href="peladaagendamentotime.php">Pelada x Agendamento x Time</a></li>
                 <li><a href="testealgoritmo.php">Teste do Algoritmo</a></li>
+                <li><a href="sair.php">Sair</a></li>
             </ul>
         </nav>   

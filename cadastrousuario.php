@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('./Classes/Config.inc.php');  
     
     $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -14,7 +15,7 @@
             'email' => $dados['email'],
             'data_nascimento' => $dados['data_nascimento'],
             'posicao_predominante' => $dados['posicao_predominante'],
-            'pass' => $dados['pass'],
+            'pass' => password_hash($dados['pass'],PASSWORD_DEFAULT),
             'lembrete' => $dados['lembrete'],
             'data_cadastro' => date('Y-m-d')
         );

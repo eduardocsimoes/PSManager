@@ -1,6 +1,12 @@
 <?php
+    session_start();
     require('./Classes/Config.inc.php');
-    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);      
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);    
+        
+    if(isset($_SESSION["id_peladeiro"])){
+        header("Location: home.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE Html>

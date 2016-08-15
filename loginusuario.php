@@ -1,19 +1,32 @@
 <?php
-    require('./Classes/Config.inc.php');  
-    
+    session_start();
+    require('./Classes/Config.inc.php');
+
     $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    
-    $dados['submitLogar'] = 'Entrar';   
-    
-    if(($dados['submitLogar'] == 'Entrar') and (!empty($dados['email']))):  
+
+    $dados['submitLogar'] = 'Entrar';
+
+    if(($dados['submitLogar'] == 'Entrar') and (!empty($dados['email']))):
         $cadastro = new Read();
-        $cadastro->ExeRead('peladeiro', 'WHERE email = :email and pass = :senha', 'email='.$dados['email'].'&senha='.$dados['pass']);
+        $cadastro->ExeRead('peladeiro', 'WHERE email = :email', 'email='.$dados['email']);
         if($cadastro->getResult()):
-            WSErro('Login Aceito', WS_ACCEPT);
+            foreach($cadastro->getResult() as $infoCadastro):
+                if(password_verify($dados['pass'], $infoCadastro['pass'])):
+                    WSErro('Login Aceito', WS_ACCEPT);
+
+                    $_SESSION["id_peladeiro"] = $infoCadastro["id_peladeiro"];
+                    $_SESSION["nivel"] = $infoCadastro["nivel"];
+                    $_SESSION["nome_peladeiro"] = $infoCadastro["nome_peladeiro"];
+
+                    echo "<script type='text/javascript'>setTimeout( function() {window.open( 'home.php', '_top' ) }, 1000);</script>";
+                else:
+                    WSErro('Senha inválida para este e-mail!', WS_ERROR);
+                endif;
+            endforeach;
         else:
-            WSErro('Login Inválido!', WS_ERROR);
+            WSErro('E-mail não cadastrado!', WS_ERROR);
         endif;
     else:
         WSErro('Favor informar usuário e senha!', WS_INFOR);
-    endif;         
+    endif;
 ?>

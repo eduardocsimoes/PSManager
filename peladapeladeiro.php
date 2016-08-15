@@ -1,5 +1,6 @@
 <?php
-session_start();
+include('verificasecao.php');
+
 require('Classes/Config.inc.php');
 
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
