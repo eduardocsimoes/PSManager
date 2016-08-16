@@ -10,7 +10,6 @@ $(document).ready(function(){
             url: "loginusuario.php",
             data: dados,
             success: function(retorno) {
-                //alert(retorno);
                 $(".controleusario-form-msg").html(retorno);
             }
         }); 
@@ -44,13 +43,13 @@ $(document).ready(function(){
     }); 
     
     $('.auxiliar label').click(function(){
-        var checked = $('.manterlogado').attr('checked');
+        var checked = $('.lembrete').attr('checked');
         
         if(checked != 'checked'){
-            $('.manterlogado').attr('checked','checked');
+            $('.lembrete').attr('checked','checked');
         }
         else{
-            $('.manterlogado').removeAttr('checked');
+            $('.lembrete').removeAttr('checked');
         }
         /*
         $('.seuCheckbox').attr('checked','checked');

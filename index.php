@@ -2,11 +2,16 @@
     session_start();
     require('./Classes/Config.inc.php');
     $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);    
-        
+     
+    $email = (isset($_COOKIE['CookieEmail'])) ? base64_decode($_COOKIE['CookieEmail']) : '';
+    $senha = (isset($_COOKIE['CookieSenha'])) ? base64_decode($_COOKIE['CookieSenha']) : '';
+    $lembrete = (isset($_COOKIE['CookieLembrete'])) ? base64_decode($_COOKIE['CookieLembrete']) : '';
+    $checked = ($lembrete == 1) ? 'checked' : '';
+    
     if(isset($_SESSION["id_peladeiro"])){
         header("Location: home.php");
         exit;
-    }
+    }        
 ?>
 
 <!DOCTYPE Html>
@@ -23,15 +28,14 @@
         
         <div class="controleusuario">
             <form class="formcontroleusuario" method="POST" action="">
-                <input type="email" name="email" class="inputs" placeholder="E-Mail" required="required" />
-                <input type="password" name="pass" class="inputs" placeholder="Senha" required="required" />                
-                <input type="submit" name="submitLogar" class="btnentrar" value="Entrar">
+                <input type="email" name="email" class="inputs" placeholder="E-Mail" value="<?= $email ?>" required="required" />
+                <input type="password" name="pass" class="inputs" placeholder="Senha" value="<?= $senha ?>" required="required" />                
+                <input type="submit" name="submitLogar" class="btnentrar" value="Entrar" />
+                <div class="auxiliar">
+                    <input type="checkbox" class="lembrete" name="lembrete" value="1" <?= $checked ?> /><label>Lembrar Usuário</label>
+                    <a href="#">Lembrar Senha</a>
+                </div>
             </form>
-            
-            <div class="auxiliar">
-                <input type="checkbox" class="manterlogado" value="1" /><label>Manter Logado</label>
-                <a href="#">Lembrar Senha</a>
-            </div>
             
             <div class="cadastro">
                 <button name="cadastre" class="btncadastrarusuario">CADASTRE-SE</button>
