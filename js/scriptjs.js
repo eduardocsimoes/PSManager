@@ -10,7 +10,7 @@ $(document).ready(function(){
             url: "loginusuario.php",
             data: dados,
             success: function(retorno) {
-                $(".controleusario-form-msg").html(retorno);
+                $(".controleusuario-form-msg").html(retorno);
             }
         }); 
         return false;
@@ -22,7 +22,7 @@ $(document).ready(function(){
         var tempoModalFundo = 1;
         var tempoModal = 500;
         modalCadastro = true;
-        
+
         $('.modalcadastro').animate({top: alturaInicioFundo},tempoModalFundo);
         $('.modal_cadastro').animate({top: alturaInicio},tempoModal);     
         

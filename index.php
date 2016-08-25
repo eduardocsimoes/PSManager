@@ -39,7 +39,7 @@
             
             <div class="cadastro">
                 <button name="cadastre" class="btncadastrarusuario">CADASTRE-SE</button>
-                <div class="controleusario-form-msg"></div>                 
+                <div class="controleusuario-form-msg"></div>                 
                     
                 <div class="modalcadastro">
                     <!-- Modal content -->    

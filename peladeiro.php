@@ -5,6 +5,11 @@ require('Classes/Config.inc.php');
 
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
+$pagina = filter_input(INPUT_GET, 'pagina',FILTER_VALIDATE_INT);
+
+if(!isset($pagina)):
+    $pagina = 1;
+endif;
 
 if(isset($dados) && $dados['submitPeladeiro']):
     unset($dados['submitPeladeiro']);
@@ -103,10 +108,18 @@ endif;
                 </tr>    
             </thead>
             <tbody>
-                <?php
-                    $pelada = new Read();
+                <?php                    
+                    $peladaQtd = new Read();
+                    $peladaQtd->ExeRead('peladeiro', 'ORDER BY id_peladeiro');                  
                     
-                    $pelada->ExeRead('peladeiro', 'ORDER BY id_peladeiro');
+                    $qtdRegistrosPeladeiros = $peladaQtd->getRowCount();
+                    $qtdRegistrosPagina = 10;
+                    $numPaginas = ceil($qtdRegistrosPeladeiros/$qtdRegistrosPagina);
+                    $registroInicial = ($pagina * $qtdRegistrosPagina) - $qtdRegistrosPagina;
+
+                    $pelada = new Read();
+                    $pelada->ExeRead('peladeiro', 'LIMIT :limit OFFSET :offset', 'limit='.$qtdRegistrosPagina.'&offset='.$registroInicial);
+                    
                     if ($pelada->getResult()):                                                
                         foreach ($pelada->getResult() as $resultPelada):                                                    
                             extract($resultPelada);
@@ -117,8 +130,6 @@ endif;
                                 foreach($posicao->getResult() as $dadosPosicao):
                                     $nomePosicao = $dadosPosicao['nome_posicao'];
                                 endforeach;
-                            else:    
-                                WSErro('Desculpe, não existem posições cadastradas!', WS_INFOR);
                             endif;                    
                             
                             echo '<tr>';
@@ -136,9 +147,23 @@ endif;
                         endforeach;                        
                     else:
                         WSErro('Desculpe, Ainda não existe peladeiro cadastrado!', WS_INFOR);
-                    endif;                       
+                    endif;  
+                    
+                    echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina=1">First</a>';
+                    for($i = 1; $i <= $numPaginas; $i++):
+                        echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina='.$i.'">'.$i.'</a>';
+                    endfor;
+                    echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina='.$numPaginas.'">Last</a>';
                 ?>
             </tbody>
+            <form name="pesquisaPeladeiro" method="GET" action="">
+                <label>
+                    <span>Nome do Peladeiro</span>
+                    <input type="text" name="nomePeladeiro" value="" />
+                </label>
+                
+                <input type="submit" name="pesquisarNome" value="Pesquisar" />
+            </form>
         </table>    
     </body>
 </html>
