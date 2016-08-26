@@ -6,9 +6,19 @@ require('Classes/Config.inc.php');
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
 $pagina = filter_input(INPUT_GET, 'pagina',FILTER_VALIDATE_INT);
+$nomePesquisado = filter_input(INPUT_GET, 'nomePeladeiro',FILTER_SANITIZE_STRING);
+$pesquisarNome = filter_input(INPUT_GET, 'pesquisarNome',FILTER_SANITIZE_STRING);
 
 if(!isset($pagina)):
     $pagina = 1;
+endif;
+
+if(!isset($pesquisarNome)):
+    $pesquisarNome = '';
+endif;
+
+if(!isset($nomePesquisado)):
+    $nomePesquisado = '';
 endif;
 
 if(isset($dados) && $dados['submitPeladeiro']):
@@ -93,62 +103,96 @@ endif;
 
         <hr>  
         
-        <table width="625" border="1">
-            <thead>
+        <table>
+            <thead align="left">
                 <tr>
-                    <th>id</th>
-                    <th>Nome do Peladeiro</th>                    
-                    <th>Posição Predominante</th>
-                    <th>E-Mail</th>
-                    <th>Data de Nascimento</th>
+                    <th width="20">id</th>
+                    <th width="150">Peladeiro</th>                    
+                    <th width="100">Posição</th>
+                    <th width="150">E-Mail</th>
+                    <th>Nascimento</th>
                     <th>Altura</th>
                     <th>Peso</th>                    
-                    <th>Data de Cadastro</th>
+                    <th>Cadastro</th>
                     <th>Excluir</th>
                 </tr>    
             </thead>
             <tbody>
-                <?php                    
+                <?php
                     $peladaQtd = new Read();
                     $peladaQtd->ExeRead('peladeiro', 'ORDER BY id_peladeiro');                  
-                    
+
                     $qtdRegistrosPeladeiros = $peladaQtd->getRowCount();
                     $qtdRegistrosPagina = 10;
                     $numPaginas = ceil($qtdRegistrosPeladeiros/$qtdRegistrosPagina);
                     $registroInicial = ($pagina * $qtdRegistrosPagina) - $qtdRegistrosPagina;
 
-                    $pelada = new Read();
-                    $pelada->ExeRead('peladeiro', 'LIMIT :limit OFFSET :offset', 'limit='.$qtdRegistrosPagina.'&offset='.$registroInicial);
-                    
-                    if ($pelada->getResult()):                                                
-                        foreach ($pelada->getResult() as $resultPelada):                                                    
-                            extract($resultPelada);
-                    
-                            $posicao = new Read();
-                            $posicao->ExeRead('posicao','WHERE id_posicao = :idPosicao', 'idPosicao='.$posicao_predominante);
-                            if($posicao->getResult()):
-                                foreach($posicao->getResult() as $dadosPosicao):
-                                    $nomePosicao = $dadosPosicao['nome_posicao'];
-                                endforeach;
-                            endif;                    
-                            
-                            echo '<tr>';
-                            echo '<td>' . $id_peladeiro . '</td>';
-                            echo '<td>' . $nome_peladeiro . '</td>';
-                            echo '<td>' . $nomePosicao . '</td>';
-                            echo '<td>' . $email . '</td>';
-                            echo '<td>' . $data_nascimento . '</td>';
-                            echo '<td>' . $altura . '</td>';
-                            echo '<td>' . $peso . '</td>';
-                            echo '<td>' . $data_cadastro . '</td>';
-                            echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="img/delete1.png" '
-                                        . 'alt="Excluir peladeiro" width=25 height=25></a></td>';
-                            echo '</tr>';
-                        endforeach;                        
+                    if($pesquisarNome != 'Pesquisar'):
+                        $pelada = new Read();
+                        $pelada->ExeRead('peladeiro', 'LIMIT :limit OFFSET :offset', 'limit='.$qtdRegistrosPagina.'&offset='.$registroInicial);
+
+                        if ($pelada->getResult()):                                                
+                            foreach ($pelada->getResult() as $resultPelada):                                                    
+                                extract($resultPelada);
+
+                                $posicao = new Read();
+                                $posicao->ExeRead('posicao','WHERE id_posicao = :idPosicao', 'idPosicao='.$posicao_predominante);
+                                if($posicao->getResult()):
+                                    foreach($posicao->getResult() as $dadosPosicao):
+                                        $nomePosicao = $dadosPosicao['nome_posicao'];
+                                    endforeach;
+                                endif;                    
+
+                                echo '<tr>';
+                                echo '<td>' . $id_peladeiro . '</td>';
+                                echo '<td>' . $nome_peladeiro . '</td>';
+                                echo '<td>' . $nomePosicao . '</td>';
+                                echo '<td>' . $email . '</td>';
+                                echo '<td>' . $data_nascimento . '</td>';
+                                echo '<td>' . $altura . '</td>';
+                                echo '<td>' . $peso . '</td>';
+                                echo '<td>' . $data_cadastro . '</td>';
+                                echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="img/delete1.png" '
+                                            . 'alt="Excluir peladeiro" width=25 height=25></a></td>';
+                                echo '</tr>';
+                            endforeach;                        
+                        else:
+                            WSErro('Desculpe, Ainda não existe peladeiro cadastrado!', WS_INFOR);
+                        endif;  
                     else:
-                        WSErro('Desculpe, Ainda não existe peladeiro cadastrado!', WS_INFOR);
-                    endif;  
-                    
+                        $pelada = new Read();
+                        $pelada->ExeRead('peladeiro', "WHERE nome_peladeiro LIKE '".$nomePesquisado."%'");
+
+                        if ($pelada->getResult()):                                                
+                            foreach ($pelada->getResult() as $resultPelada):                                                    
+                                extract($resultPelada);
+
+                                $posicao = new Read();
+                                $posicao->ExeRead('posicao','WHERE id_posicao = :idPosicao', 'idPosicao='.$posicao_predominante);
+                                if($posicao->getResult()):
+                                    foreach($posicao->getResult() as $dadosPosicao):
+                                        $nomePosicao = $dadosPosicao['nome_posicao'];
+                                    endforeach;
+                                endif;                    
+
+                                echo '<tr>';
+                                echo '<td>' . $id_peladeiro . '</td>';
+                                echo '<td>' . $nome_peladeiro . '</td>';
+                                echo '<td>' . $nomePosicao . '</td>';
+                                echo '<td>' . $email . '</td>';
+                                echo '<td>' . $data_nascimento . '</td>';
+                                echo '<td>' . $altura . '</td>';
+                                echo '<td>' . $peso . '</td>';
+                                echo '<td>' . $data_cadastro . '</td>';
+                                echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="img/delete1.png" '
+                                            . 'alt="Excluir peladeiro" width=25 height=25></a></td>';
+                                echo '</tr>';
+                            endforeach;                        
+                        else:
+                            WSErro('Desculpe, Ainda não existe peladeiro cadastrado!', WS_INFOR);
+                        endif;                          
+                    endif;
+
                     echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina=1">First</a>';
                     for($i = 1; $i <= $numPaginas; $i++):
                         echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina='.$i.'">'.$i.'</a>';
