@@ -16,14 +16,10 @@
 
 <!DOCTYPE Html>
 <html lang="pt_br">
-    <head>
-        <title>Pelada Soccer Manager</title>
-        <meta charset="UTF-8">
-        
-        <link type="text/css" rel="stylesheet" href="css/style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
-        <script type="text/javascript" src="<?= INCLUDE_PATH; ?>/js/scriptjs.js"></script>
-    </head>    
+    <?php 
+        require('inc/head.php')
+    ?>
+    
     <body class="body_home no-select">
         
         <div class="controleusuario">

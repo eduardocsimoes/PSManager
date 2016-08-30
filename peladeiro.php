@@ -21,7 +21,7 @@ if(!isset($nomePesquisado)):
     $nomePesquisado = '';
 endif;
 
-if(isset($dados) && $dados['submitPeladeiro']):
+if(isset($dados) && isset($dados['submitPeladeiro'])):
     unset($dados['submitPeladeiro']);
     $dados['data_cadastro'] = date('Y-m-d');
 
@@ -47,10 +47,10 @@ endif;
 
 <!DOCTYPE Html>
 <html lang="pt_br">
-    <head>
-        <title>Pelada Soccer Manager</title>
-        <meta charset="UTF-8">
-    </head>    
+    <?php 
+        require('inc/head.php')
+    ?>
+    
     <body>
         <?php
             require('inc/nav.php');
@@ -103,18 +103,37 @@ endif;
 
         <hr>  
         
-        <table>
-            <thead align="left">
+        <div id="pager" class="pager">
+            <div class="page">
+                <form>
+                    <img src="ico/first.png" class="first" title="Primeiro"/>
+                    <img src="ico/prev.png" class="prev" title="Anterior"/>
+                    <input type="text" class="pagedisplay"/>
+                    <img src="ico/next.png" class="next" title="Próximo"/>
+                    <img src="ico/last.png" class="last" title="Último"/>
+                </form>
+            </div>
+            
+            <div class="search">
+                <form name="pesquisaPeladeiro" method="POST" action="">
+                    <label for="pesquisarPeladeiro">Pesquisar</label>
+                    <input type="text" class="pesquisarTabela" name="pesquisarPeladeiro" value="" />
+                </form> 
+            </div>    
+        </div>    
+        
+        <table class="listaPeladeiros">
+            <thead>
                 <tr>
-                    <th width="20">id</th>
-                    <th width="150">Peladeiro</th>                    
-                    <th width="100">Posição</th>
-                    <th width="150">E-Mail</th>
-                    <th>Nascimento</th>
-                    <th>Altura</th>
-                    <th>Peso</th>                    
-                    <th>Cadastro</th>
-                    <th>Excluir</th>
+                    <th class="header">id</th>
+                    <th class="header">Peladeiro</th>                    
+                    <th class="header">Posição</th>
+                    <th class="header">E-Mail</th>
+                    <th class="header">Nascimento</th>
+                    <th class="header">Altura</th>
+                    <th class="header">Peso</th>                    
+                    <th class="header">Cadastro</th>
+                    <th>Ações</th>
                 </tr>    
             </thead>
             <tbody>
@@ -152,8 +171,10 @@ endif;
                                 echo '<td>' . $altura . '</td>';
                                 echo '<td>' . $peso . '</td>';
                                 echo '<td>' . $data_cadastro . '</td>';
-                                echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="img/delete1.png" '
-                                            . 'alt="Excluir peladeiro" width=25 height=25></a></td>';
+                                echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?editar='.$id_peladeiro.'"><img src="ico/edit.png" '
+                                            . 'alt="Editar peladeiro"  width="16" height="16"></a>'.'&nbsp&nbsp&nbsp'.
+                                        '<a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="ico/delete.png" '
+                                            . 'alt="Excluir peladeiro"  width="16" height="16"></a></td>';
                                 echo '</tr>';
                             endforeach;                        
                         else:
@@ -184,30 +205,25 @@ endif;
                                 echo '<td>' . $altura . '</td>';
                                 echo '<td>' . $peso . '</td>';
                                 echo '<td>' . $data_cadastro . '</td>';
-                                echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="img/delete1.png" '
-                                            . 'alt="Excluir peladeiro" width=25 height=25></a></td>';
+                                echo '<td><a href="http://localhost:8080/psmanager/peladeiro.php?editar='.$id_peladeiro.'"><img src="ico/edit.png" '
+                                            . 'alt="Editar peladeiro"  width="16" height="16"></a>'.'&nbsp&nbsp&nbsp'.
+                                        '<a href="http://localhost:8080/psmanager/peladeiro.php?excluir='.$id_peladeiro.'"><img src="ico/delete.png" '
+                                            . 'alt="Excluir peladeiro"  width="16" height="16"></a></td>';
                                 echo '</tr>';
                             endforeach;                        
                         else:
                             WSErro('Desculpe, Ainda não existe peladeiro cadastrado!', WS_INFOR);
                         endif;                          
                     endif;
-
+                    /*
                     echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina=1">First</a>';
                     for($i = 1; $i <= $numPaginas; $i++):
                         echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina='.$i.'">'.$i.'</a>';
                     endfor;
                     echo '<a href="http://localhost:8080/psmanager/peladeiro.php?pagina='.$numPaginas.'">Last</a>';
+                    */
                 ?>
             </tbody>
-            <form name="pesquisaPeladeiro" method="GET" action="">
-                <label>
-                    <span>Nome do Peladeiro</span>
-                    <input type="text" name="nomePeladeiro" value="" />
-                </label>
-                
-                <input type="submit" name="pesquisarNome" value="Pesquisar" />
-            </form>
         </table>    
     </body>
 </html>
