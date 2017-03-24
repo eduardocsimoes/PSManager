@@ -1,81 +1,77 @@
-create table pelada(
-	id_pelada bigint not null auto_increment,
-    nome_pelada varchar(100) not null,
-    data_cadastro date not null,
-    id_peladeiro int not null,
-    primary key(id_pelada)
-);
+CREATE TABLE pelada (
+  id_pelada bigint(20) NOT NULL AUTO_INCREMENT,
+  nome_pelada varchar(100) NOT NULL,
+  data_cadastro date NOT NULL,
+  id_peladeiro int(11) NOT NULL,
+  PRIMARY KEY (id_pelada)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-create table peladeiro(
-	id_peladeiro bigint not null auto_increment,
-    nome_peladeiro varchar(50) not null,
-	posicao_predominante int not null,
-    email varchar(50) not null,
-    data_nascimento date not null,
-    altura numeric(5,2),
-    peso numeric(5,2),
-    data_cadastro date not null,
-    primary key(id_peladeiro)
-);
+CREATE TABLE posicao (
+  id_posicao int(11) NOT NULL AUTO_INCREMENT,
+  nome_posicao varchar(50) NOT NULL,
+  data_cadastro date NOT NULL,
+  PRIMARY KEY (id_posicao)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-create table pelada_peladeiro(
-    id_pelada bigint not null,
-    id_peladeiro bigint not null,
-    data_cadastro date not null,
-    primary key(id_pelada, id_peladeiro)
-);
+CREATE TABLE habilidade (
+  id_habilidade int(11) NOT NULL AUTO_INCREMENT,
+  nome_habilidade varchar(50) NOT NULL,
+  data_cadastro date NOT NULL,
+  PRIMARY KEY (id_habilidade)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
-create table posicao(
-	id_posicao int not null auto_increment,
-    nome_posicao varchar(50) not null,
-    data_cadastro date not null,
-    primary key(id_posicao)
-);
+CREATE TABLE pelada (
+  id_pelada bigint(20) NOT NULL AUTO_INCREMENT,
+  nome_pelada varchar(100) NOT NULL,
+  data_cadastro date NOT NULL,
+  id_peladeiro int(11) NOT NULL,
+  PRIMARY KEY (id_pelada)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-create table peladeiro_posicao(
-    id_peladeiro bigint not null,
-    id_posicao int not null,
-    data_cadastro date not null,
-    primary key(id_peladeiro, id_posicao)
-);
+CREATE TABLE pelada_agendamento (
+  id_agendamento bigint(20) NOT NULL AUTO_INCREMENT,
+  id_pelada bigint(20) NOT NULL,
+  data_agendamento date NOT NULL,
+  hora_agendamento time NOT NULL,
+  data_cadastro date NOT NULL,
+  nome_local varchar(100) NOT NULL,
+  qtd_peladeiro_time int(11) NOT NULL,
+  situacao_pelada enum(A Confirmar,Confirmada,Cancelada) NOT NULL,
+  PRIMARY KEY (id_agendamento)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-create table habilidade(
-	id_habilidade int not null auto_increment,
-    nome_habilidade varchar(50) not null,
-    data_cadastro date not null,
-	primary key(id_habilidade)
-);
+CREATE TABLE pelada_agendamento_equipe (
+  id_equipe bigint(20) NOT NULL AUTO_INCREMENT,
+  id_pelada_agendamento bigint(20) NOT NULL,
+  id_time bigint(20) NOT NULL,
+  id_peladeiro bigint(20) NOT NULL,
+  PRIMARY KEY (id_equipe)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-create table peladeiro_habilidade(
-	id_peladeiro bigint not null,
-    id_habilidade int not null,
-    nivel numeric(4,2),
-    data_cadastro date not null,
-    primary key(id_peladeiro, id_habilidade)
-);
+CREATE TABLE pelada_agendamento_peladeiro (
+  id_agendamento bigint(20) NOT NULL AUTO_INCREMENT,
+  id_peladeiro bigint(20) NOT NULL,
+  PRIMARY KEY (id_agendamento,id_peladeiro)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-create table pelada_agendamento(
-	id_agendamento bigint not null auto_increment,
-    id_pelada bigint not null,
-    data_agendamento date not null,
-    hora_agendamento time not null,
-    data_cadastro date not null,
-    nome_local varchar(100) not null,
-    qtd_peladeiro_time int not null,
-    situacao_pelada ENUM('A Confirmar', 'Confirmada', 'Cancelada') not null,
-    primary key(id_agendamento)
-);
+CREATE TABLE pelada_peladeiro (
+  id_pelada bigint(20) NOT NULL,
+  id_peladeiro bigint(20) NOT NULL,
+  data_cadastro date NOT NULL,
+  PRIMARY KEY (id_pelada,id_peladeiro)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-create table pelada_agendamento_peladeiro(
-	id_agendamento bigint not null auto_increment,
-    id_peladeiro bigint not null,
-    primary key(id_agendamento, id_peladeiro)
-);
+CREATE TABLE peladeiro_habilidade (
+  id_peladeiro bigint(20) NOT NULL,
+  id_habilidade int(11) NOT NULL,
+  nivel decimal(4,2) DEFAULT NULL,
+  data_cadastro date NOT NULL,
+  PRIMARY KEY (id_peladeiro,id_habilidade)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-create table pelada_agendamento_equipe(
-    id_equipe bigint not null auto_increment,
-    id_pelada_agendamento bigint not null,
-    id_time bigint not null,
-    id_peladeiro bigint not null,
-    primary key(id_equipe)
-);
+CREATE TABLE peladeiro_posicao (
+  id_peladeiro bigint(20) NOT NULL,
+  id_posicao int(11) NOT NULL,
+  data_cadastro date NOT NULL,
+  PRIMARY KEY (id_peladeiro,id_posicao)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
