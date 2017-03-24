@@ -29,11 +29,11 @@ class Algoritmo {
     
     public function escolhaAlgoritmo($Algoritmo){        
         $this->algoritmo = $Algoritmo;        
-        $this->qtdEquipes = 3;
+        $this->qtdEquipes = 4;
         $this->idAgendamento = 1;
-        $this->maxEquipes = 3;
+        $this->maxEquipes = 4;
         $this->qtdPeladeirosporEquipe = 6;
-        $this->incluirGoleiro = 'N';
+        $this->incluirGoleiro = 'S';
         $this->qtdTotalJogadoresEquipes = 0;
         
         $this->informacoesJogadores();
