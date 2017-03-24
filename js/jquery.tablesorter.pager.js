@@ -18,14 +18,14 @@
             function fixPosition(table) {
                 var c = table.config;
                 if(!c.pagerPositionSet && c.positionFixed) {
-                        var c = table.config, o = $(table);
-                        if(o.offset) {
-                                c.container.css({
-                                        top: o.offset().top + o.height() + 'px',
-                                        position: 'absolute'
-                                });
-                        }
-                        c.pagerPositionSet = true;
+                    var c = table.config, o = $(table);
+                    if(o.offset) {
+                            c.container.css({
+                                    top: o.offset().top + o.height() + 'px',
+                                    position: 'absolute'
+                            });
+                    }
+                    c.pagerPositionSet = true;
                 }
             }
 
