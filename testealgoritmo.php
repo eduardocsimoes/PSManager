@@ -3,6 +3,10 @@ require('Classes/Config.inc.php');
 ?>
 
 <html>
+    <?php 
+        require('inc/head.php')
+    ?> 
+    
     <body>
         <?php
             require('inc/nav.php');

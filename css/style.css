@@ -8,7 +8,11 @@ body{
     background:url(../img/campo1.jpg) no-repeat center center fixed; 
     -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;}
 
-.menu-principal{position:relative; float: left; display:inline; text-decoration: none;background: lightblue;}
+//#103a04
+
+/*Configurações Padrões*/
+.menu-principal{position: relative;}
+
 
 /*MENSAGENS DO SISTEM*/
 .trigger{padding: 15px 15px 15px 40px; background: #eee; font-size: 14px; margin: 5px 0px 0px 0px; position: absolute;}
