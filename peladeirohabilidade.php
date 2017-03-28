@@ -80,11 +80,9 @@ endif;
 
 <!DOCTYPE Html>
 <html lang="pt_br">
-    <head>
-        <title>Pelada Soccer Manager</title>
-        <meta charset="utf-8">
-        <script type="text/javascript" src="js/jquery.js"></script>
-    </head>    
+    <?php 
+        require('inc/head.php')
+    ?>
     <body>
         <?php
         require('inc/nav.php');

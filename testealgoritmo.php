@@ -4,6 +4,10 @@ require('Classes/Config.inc.php');
 
 <html>
     <body>
+        <?php
+            require('inc/nav.php');
+        ?>
+        
         <?php 
             $algoritmo = new Algoritmo();
             

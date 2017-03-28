@@ -33,7 +33,7 @@ class Algoritmo {
         $this->idAgendamento = 1;
         $this->maxEquipes = 4;
         $this->qtdPeladeirosporEquipe = 6;
-        $this->incluirGoleiro = 'S';
+        $this->incluirGoleiro = 'N';
         $this->qtdTotalJogadoresEquipes = 0;
         
         $this->informacoesJogadores();

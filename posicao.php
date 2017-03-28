@@ -32,10 +32,9 @@ endif;
 
 <!DOCTYPE Html>
 <html lang="pt_br">
-    <head>
-        <title>Pelada Soccer Manager</title>
-        <meta charset="UTF-8">
-    </head>    
+    <?php 
+        require('inc/head.php')
+    ?>  
     <body>
         <?php
             require('inc/nav.php');
