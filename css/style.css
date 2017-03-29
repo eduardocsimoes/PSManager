@@ -1,17 +1,29 @@
 *, html{
-	font-family: Helvetica, Arial,sans-serif;
-	margin: 0px;
-	padding: 0px;
-	font-size: 12px;
+    font-family: Helvetica, Arial,sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+    text-decoration: none;
+    list-style: none;
 }
+
 body{
-    background:url(../img/campo1.jpg) no-repeat center center fixed; 
-    -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;}
+    background: url(../img/campo1.jpg) no-repeat center center fixed; 
+    -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;
+}
 
-//#103a04
-
-/*Configurações Padrões*/
-.menu-principal{position: relative;}
+.menu-principal{position:relative;width:980px;margin:0 auto}
+.logo{position:relative;z-index:123;padding:10px;font:18px verdana;color:#6DDB07;float:left;width:15%}
+.logo a{color:#6DDB07;}
+.menu-principal,.menu-principal ul,.menu-principal ul li,.menu-principal ul li a,.menu-principal #head-mobile{
+    border:0;list-style: none;line-height: 1;display: block;position:relative;-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing: border-box;}
+.menu-principal:after,.menu-principal > ul:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}
+.menu-principal #head-mobile{display:none}
+.menu-principal{font-family:sans-serif;background:#333}
+.menu-principal > ul > li{float:left}
+.menu-principal > ul > li > a{padding:17px;font-size:12px;letter-spacing:1px;text-decoration:none;color:#ddd;font-weight:700;}
+.menu-principal > ul > li:hover > a,.menu-principal ul li.active a{color:#fff}
+.menu-principal > ul > li:hover,.menu-principal ul li.active:hover,.menu-principal ul li.active,.menu-principal ul li.has-sub.active:hover{background:#448D00!important;-webkit-transition:background .3s ease;-ms-transition:background .3s ease;transition:background .3s ease;}
 
 
 /*MENSAGENS DO SISTEM*/
@@ -109,7 +121,6 @@ font-size:14px;}
     height:10%;    
 }
 .modal_cadastro .modal-head-box{
-    position:absolute;
     padding:0px 0px 0px 0px;
 }
 .modal_cadastro .modal-body{
