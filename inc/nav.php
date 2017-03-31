@@ -2,7 +2,7 @@
             <div class="logo">PSManager</div>
             <div id="head-mobile"></div>
             <div class="button"></div>
-            <ul>
+            <ul class="menu-principal-itens">
                 <li class="active"><a href="home.php">Home</a></li>
                 <li><a href="#">Cadastros</a>
                     <ul>
