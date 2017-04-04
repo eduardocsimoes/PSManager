@@ -52,7 +52,7 @@ body{
 .menu-principal{width:100%}
 .menu-principal ul{width:100%;display:none}
 .menu-principal ul li{width:100%;border-top:1px solid #444}
-/*.menu-principal ul li:hover{background:#363636;}
+.menu-principal ul li:hover{background:#363636;}
 .menu-principal ul ul li,.menu-principal li:hover > ul > li{height:auto}
 .menu-principal ul li a,.menu-principal ul ul li a{width:100%;border-bottom:0}
 .menu-principal > ul > li{float:none}
@@ -80,7 +80,7 @@ body{
 .menu-principal ul ul .submenu-button:before{top:12px;right:16px}
 .menu-principal .submenu-button.submenu-opened:before{display:none}
 .menu-principal ul ul ul li.active a{border-left:none}
-.menu-principal > ul > li.has-sub > ul > li.active > a,.menu-principal > ul ul > li.has-sub > ul > li.active > a{border-top:none}*/
+.menu-principal > ul > li.has-sub > ul > li.active > a,.menu-principal > ul ul > li.has-sub > ul > li.active > a{border-top:none}
 }
 
 /*MENSAGENS DO SISTEM*/
