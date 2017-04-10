@@ -34,11 +34,11 @@ endif;
 <!DOCTYPE Html>
 <html lang="pt_br">
     <?php 
-        require('inc/head.php')
+        require('inc/head.php');
     ?> 
     <body>
         <?php
-            require('inc/nav.php');
+            require('inc/nav1.php');
         ?>                  
         
         <h1>Cadastro da Pelada</h1>
