@@ -10,7 +10,7 @@ include('verificasecao.php');
     
     <body>
         <?php
-            require('inc/nav1.php');
+            require('inc/nav.php');
         ?>
     </body>
 </html>

@@ -38,7 +38,7 @@ endif;
     ?> 
     <body>
         <?php
-            require('inc/nav1.php');
+            require('inc/nav.php');
         ?>                  
         
         <h1>Cadastro da Pelada</h1>
