@@ -1,80 +1,79 @@
 <?php
-include('verificasecao.php');
+    include('verificasecao.php');
+    require('Classes/Config.inc.php');
 
-require('Classes/Config.inc.php');
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
 
-$dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
+    //$nomePelada = 'Escolha uma Pelada';
+    $_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro';
+    $idPeladeiro = null;
+    $idPosicao = null;
 
-//$nomePelada = 'Escolha uma Pelada';
-$_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro';
-$idPeladeiro = null;
-$idPosicao = null;
-
-if(isset($dados['selecaoPeladeiro']) && $dados['selecaoPeladeiro'] == 0):
-    //$_SESSION['idPelada'] = null;
-    $_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro'; 
-endif;
-
-if(!isset($_SESSION['idPeladeiro'])):    
-    $_SESSION['idPeladeiro'] = null;
-endif;
-
-if (isset($dados) && $dados['submitPeladeiro']=='Selecionar'):
-    //unset($dados['submitPelada']);
-    $nomePeladeiro = $dados['selecaoPeladeiro'];
-
-    $peladeiro = new Read;
-
-    $peladeiro->ExeRead('peladeiro', 'WHERE nome_peladeiro = :nome_peladeiro', 'nome_peladeiro='.$nomePeladeiro);
-    if ($peladeiro->getResult()):
-        foreach($peladeiro->getResult() as $resultPeladeiro):            
-            extract($resultPeladeiro);                  
-            $_SESSION['idPeladeiro'] = $id_peladeiro;
-            $_SESSION['nomePeladeiro'] = $nome_peladeiro;            
-        endforeach;        
-    else:
-        WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+    if(isset($dados['selecaoPeladeiro']) && $dados['selecaoPeladeiro'] == 0):
+        //$_SESSION['idPelada'] = null;
+        $_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro'; 
     endif;
-endif;
 
-if (isset($dados) && $dados['submitPeladeiro']=='Vincular'):
-    //unset($dados['submitPeladeiro']);
-    $nomePosicao = $dados['selecaoPosicao'];
-    $dataCadastro = date('Y-m-d');
-
-    $posicao = new Read();
-    $criarVinculo = new Create();    
-
-    $posicao->ExeRead('posicao', 'WHERE nome_posicao = :nome_posicao', 'nome_posicao='.$nomePosicao);
-    if ($posicao->getResult()):
-        foreach($posicao->getResult() as $resultPosicao):            
-            extract($resultPosicao);
-            $idPosicao = $id_posicao;
-            
-            $dadosPosicao = ['id_peladeiro' => $_SESSION['idPeladeiro'], 'id_posicao' => $idPosicao, 'data_cadastro' => $dataCadastro];            
-            $criarVinculo->ExeCreate('peladeiro_posicao', $dadosPosicao);  
-
-            if($criarVinculo->getResult()==0):
-                //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
-                echo 'Cadastro realizado com sucesso!';
-            else:
-                WSErro('Desculpe, Não foi possível vincular o peladeiro à pelada!', WS_ERROR);
-            endif;
-        endforeach;  
-    else:
-        WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+    if(!isset($_SESSION['idPeladeiro'])):    
+        $_SESSION['idPeladeiro'] = null;
     endif;
-endif;
 
-if($excluirId):
-    $deleta = new Delete();
-    $deleta->ExeDelete('peladeiro_posicao', 'WHERE id_posicao=:posicao AND id_peladeiro=:peladeiro', 'peladeiro='.$_SESSION['idPeladeiro'].'&posicao='.$excluirId);
-    if($deleta->getResult()):
-        echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+    if (isset($dados) && $dados['submitPeladeiro']=='Selecionar'):
+        //unset($dados['submitPelada']);
+        $nomePeladeiro = $dados['selecaoPeladeiro'];
+
+        $peladeiro = new Read;
+
+        $peladeiro->ExeRead('peladeiro', 'WHERE nome_peladeiro = :nome_peladeiro', 'nome_peladeiro='.$nomePeladeiro);
+        if ($peladeiro->getResult()):
+            foreach($peladeiro->getResult() as $resultPeladeiro):            
+                extract($resultPeladeiro);                  
+                $_SESSION['idPeladeiro'] = $id_peladeiro;
+                $_SESSION['nomePeladeiro'] = $nome_peladeiro;            
+            endforeach;        
+        else:
+            WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+        endif;
     endif;
-    header("Location:http://localhost:8080/psmanager/peladeiroposicao.php");
-endif;
+
+    if (isset($dados) && $dados['submitPeladeiro']=='Vincular'):
+        //unset($dados['submitPeladeiro']);
+        $nomePosicao = $dados['selecaoPosicao'];
+        $dataCadastro = date('Y-m-d');
+
+        $posicao = new Read();
+        $criarVinculo = new Create();    
+
+        $posicao->ExeRead('posicao', 'WHERE nome_posicao = :nome_posicao', 'nome_posicao='.$nomePosicao);
+        if ($posicao->getResult()):
+            foreach($posicao->getResult() as $resultPosicao):            
+                extract($resultPosicao);
+                $idPosicao = $id_posicao;
+                
+                $dadosPosicao = ['id_peladeiro' => $_SESSION['idPeladeiro'], 'id_posicao' => $idPosicao, 'data_cadastro' => $dataCadastro];            
+                $criarVinculo->ExeCreate('peladeiro_posicao', $dadosPosicao);  
+
+                if($criarVinculo->getResult()==0):
+                    //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
+                    echo 'Cadastro realizado com sucesso!';
+                else:
+                    WSErro('Desculpe, Não foi possível vincular o peladeiro à pelada!', WS_ERROR);
+                endif;
+            endforeach;  
+        else:
+            WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+        endif;
+    endif;
+
+    if($excluirId):
+        $deleta = new Delete();
+        $deleta->ExeDelete('peladeiro_posicao', 'WHERE id_posicao=:posicao AND id_peladeiro=:peladeiro', 'peladeiro='.$_SESSION['idPeladeiro'].'&posicao='.$excluirId);
+        if($deleta->getResult()):
+            echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+        endif;
+        header("Location:http://localhost:8080/psmanager/peladeiroposicao.php");
+    endif;
 ?>
 
 <!DOCTYPE Html>
@@ -141,7 +140,7 @@ endif;
             <input name="submitPeladeiro" type="submit" value="Vincular" />
         </form>
         
-        <table width="625" border="1">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>

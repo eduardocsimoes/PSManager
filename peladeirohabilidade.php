@@ -1,81 +1,80 @@
 <?php
-include('verificasecao.php');
+    include('verificasecao.php');
+    require('Classes/Config.inc.php');
 
-require('Classes/Config.inc.php');
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
 
-$dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
+    //$nomePelada = 'Escolha uma Pelada';
+    $_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro';
+    $idPeladeiro = null;
+    $idHabilidade = null;
 
-//$nomePelada = 'Escolha uma Pelada';
-$_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro';
-$idPeladeiro = null;
-$idHabilidade = null;
-
-if(isset($dados['selecaoPeladeiro']) && $dados['selecaoPeladeiro'] == 0):
-    //$_SESSION['idPelada'] = null;
-    $_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro'; 
-endif;
-
-if(!isset($_SESSION['idPeladeiro'])):    
-    $_SESSION['idPeladeiro'] = null;
-endif;
-
-if (isset($dados) && $dados['submitPeladeiro']=='Selecionar'):
-    //unset($dados['submitPelada']);
-    $nomePeladeiro = $dados['selecaoPeladeiro'];
-
-    $peladeiro = new Read;
-
-    $peladeiro->ExeRead('peladeiro', 'WHERE nome_peladeiro = :nome_peladeiro', 'nome_peladeiro='.$nomePeladeiro);
-    if ($peladeiro->getResult()):
-        foreach($peladeiro->getResult() as $resultPeladeiro):            
-            extract($resultPeladeiro);                  
-            $_SESSION['idPeladeiro'] = $id_peladeiro;
-            $_SESSION['nomePeladeiro'] = $nome_peladeiro;            
-        endforeach;        
-    else:
-        WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+    if(isset($dados['selecaoPeladeiro']) && $dados['selecaoPeladeiro'] == 0):
+        //$_SESSION['idPelada'] = null;
+        $_SESSION['nomePeladeiro'] = 'Escolha um Peladeiro'; 
     endif;
-endif;
 
-if (isset($dados) && $dados['submitPeladeiro']=='Vincular'):
-    //unset($dados['submitPeladeiro']);
-    $nomeHabilidade = $dados['selecaoHabilidade'];
-    $nivel = $dados['selecaoNivel'];
-    $dataCadastro = date('Y-m-d');
-
-    $habilidade = new Read();
-    $criarVinculo = new Create();    
-
-    $habilidade->ExeRead('habilidade', 'WHERE nome_habilidade = :nome_habilidade', 'nome_habilidade='.$nomeHabilidade);
-    if ($habilidade->getResult()):
-        foreach($habilidade->getResult() as $resultHabilidade):            
-            extract($resultHabilidade);
-            $idHabilidade = $id_habilidade;
-            
-            $dadosHabilidade = ['id_peladeiro' => $_SESSION['idPeladeiro'], 'id_habilidade' => $idHabilidade, 'nivel' => $nivel, 'data_cadastro' => $dataCadastro];            
-            $criarVinculo->ExeCreate('peladeiro_habilidade', $dadosHabilidade);  
-
-            if($criarVinculo->getResult()==0):
-                //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
-                echo 'Cadastro realizado com sucesso!';
-            else:
-                WSErro('Desculpe, Não foi possível vincular o peladeiro à habilidade!', WS_ERROR);
-            endif;
-        endforeach;  
-    else:
-        WSErro('Nenhuma habilidade selecionada', WS_INFOR);        
+    if(!isset($_SESSION['idPeladeiro'])):    
+        $_SESSION['idPeladeiro'] = null;
     endif;
-endif;
 
-if($excluirId):
-    $deleta = new Delete();
-    $deleta->ExeDelete('peladeiro_habilidade', 'WHERE id_habilidade=:habilidade AND id_peladeiro=:peladeiro', 'peladeiro='.$_SESSION['idPeladeiro'].'&habilidade='.$excluirId);
-    if($deleta->getResult()):
-        echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+    if (isset($dados) && $dados['submitPeladeiro']=='Selecionar'):
+        //unset($dados['submitPelada']);
+        $nomePeladeiro = $dados['selecaoPeladeiro'];
+
+        $peladeiro = new Read;
+
+        $peladeiro->ExeRead('peladeiro', 'WHERE nome_peladeiro = :nome_peladeiro', 'nome_peladeiro='.$nomePeladeiro);
+        if ($peladeiro->getResult()):
+            foreach($peladeiro->getResult() as $resultPeladeiro):            
+                extract($resultPeladeiro);                  
+                $_SESSION['idPeladeiro'] = $id_peladeiro;
+                $_SESSION['nomePeladeiro'] = $nome_peladeiro;            
+            endforeach;        
+        else:
+            WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+        endif;
     endif;
-    header("Location:http://localhost:8080/psmanager/peladeirohabilidade.php");
-endif;
+
+    if (isset($dados) && $dados['submitPeladeiro']=='Vincular'):
+        //unset($dados['submitPeladeiro']);
+        $nomeHabilidade = $dados['selecaoHabilidade'];
+        $nivel = $dados['selecaoNivel'];
+        $dataCadastro = date('Y-m-d');
+
+        $habilidade = new Read();
+        $criarVinculo = new Create();    
+
+        $habilidade->ExeRead('habilidade', 'WHERE nome_habilidade = :nome_habilidade', 'nome_habilidade='.$nomeHabilidade);
+        if ($habilidade->getResult()):
+            foreach($habilidade->getResult() as $resultHabilidade):            
+                extract($resultHabilidade);
+                $idHabilidade = $id_habilidade;
+                
+                $dadosHabilidade = ['id_peladeiro' => $_SESSION['idPeladeiro'], 'id_habilidade' => $idHabilidade, 'nivel' => $nivel, 'data_cadastro' => $dataCadastro];            
+                $criarVinculo->ExeCreate('peladeiro_habilidade', $dadosHabilidade);  
+
+                if($criarVinculo->getResult()==0):
+                    //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
+                    echo 'Cadastro realizado com sucesso!';
+                else:
+                    WSErro('Desculpe, Não foi possível vincular o peladeiro à habilidade!', WS_ERROR);
+                endif;
+            endforeach;  
+        else:
+            WSErro('Nenhuma habilidade selecionada', WS_INFOR);        
+        endif;
+    endif;
+
+    if($excluirId):
+        $deleta = new Delete();
+        $deleta->ExeDelete('peladeiro_habilidade', 'WHERE id_habilidade=:habilidade AND id_peladeiro=:peladeiro', 'peladeiro='.$_SESSION['idPeladeiro'].'&habilidade='.$excluirId);
+        if($deleta->getResult()):
+            echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+        endif;
+        header("Location:http://localhost:8080/psmanager/peladeirohabilidade.php");
+    endif;
 ?>
 
 <!DOCTYPE Html>
@@ -156,7 +155,7 @@ endif;
             <input name="submitPeladeiro" type="submit" value="Vincular" />
         </form>
         
-        <table width="625" border="1">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>

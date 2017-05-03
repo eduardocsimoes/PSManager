@@ -1,62 +1,61 @@
 <?php
-include('verificasecao.php');
+    include('verificasecao.php');
+    require('Classes/Config.inc.php');
 
-require('Classes/Config.inc.php');
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $excluirData = filter_input(INPUT_GET, 'excluirdata');
+    $excluirHora = filter_input(INPUT_GET, 'excluirhora');
 
-$dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$excluirData = filter_input(INPUT_GET, 'excluirdata');
-$excluirHora = filter_input(INPUT_GET, 'excluirhora');
+    if (isset($dados) && $dados['submitPelada']=='Selecionar'):
+        //unset($dados['submitPelada']);
+        $nomePelada = $dados['selecaoPelada'];
 
-if (isset($dados) && $dados['submitPelada']=='Selecionar'):
-    //unset($dados['submitPelada']);
-    $nomePelada = $dados['selecaoPelada'];
+        $pelada = new Read;
 
-    $pelada = new Read;
-
-    $pelada->ExeRead('pelada', 'WHERE nome_pelada = :nome_pelada', 'nome_pelada='.$nomePelada);
-    if ($pelada->getResult()):
-        foreach($pelada->getResult() as $resultPelada):            
-            extract($resultPelada);                  
-            $_SESSION['idPelada'] = $id_pelada;
-            $_SESSION['nomePelada'] = $nome_pelada;            
-        endforeach;        
-    else:
-        WSErro('Nenhuma pelada selecionada', WS_INFOR);        
+        $pelada->ExeRead('pelada', 'WHERE nome_pelada = :nome_pelada', 'nome_pelada='.$nomePelada);
+        if ($pelada->getResult()):
+            foreach($pelada->getResult() as $resultPelada):            
+                extract($resultPelada);                  
+                $_SESSION['idPelada'] = $id_pelada;
+                $_SESSION['nomePelada'] = $nome_pelada;            
+            endforeach;        
+        else:
+            WSErro('Nenhuma pelada selecionada', WS_INFOR);        
+        endif;
     endif;
-endif;
 
-if (isset($dados) && $dados['submitPelada']=='Vincular'):
-    //unset($dados['submitPeladeiro']);
-    $data = $dados['data'];
-    $hora = $dados['hora'];
-    $local = $dados['local'];
-    $qtd = $dados['qtd'];
-    $situacao = 'A Confirmar';
-    $dataCadastro = date('Y-m-d');
+    if (isset($dados) && $dados['submitPelada']=='Vincular'):
+        //unset($dados['submitPeladeiro']);
+        $data = $dados['data'];
+        $hora = $dados['hora'];
+        $local = $dados['local'];
+        $qtd = $dados['qtd'];
+        $situacao = 'A Confirmar';
+        $dataCadastro = date('Y-m-d');
 
-    $criarVinculo = new Create();    
+        $criarVinculo = new Create();    
 
-    $dadosAgendamento = ['id_pelada' => $_SESSION['idPelada'], 'data_agendamento' => $data, 'hora_agendamento' => $hora, 
-                       'nome_local' => $local, 'qtd_peladeiro_time' => $qtd, 'situacao_pelada' => $situacao, 'data_cadastro' => $dataCadastro];            
-    $criarVinculo->ExeCreate('pelada_agendamento', $dadosAgendamento);  
+        $dadosAgendamento = ['id_pelada' => $_SESSION['idPelada'], 'data_agendamento' => $data, 'hora_agendamento' => $hora, 
+                           'nome_local' => $local, 'qtd_peladeiro_time' => $qtd, 'situacao_pelada' => $situacao, 'data_cadastro' => $dataCadastro];            
+        $criarVinculo->ExeCreate('pelada_agendamento', $dadosAgendamento);  
 
-    if($criarVinculo->getResult()==0):
-        //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
-        echo 'Cadastro realizado com sucesso!';
-    else:
-        WSErro('Desculpe, Não foi possível agendar à pelada!', WS_ERROR);
+        if($criarVinculo->getResult()==0):
+            //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
+            echo 'Cadastro realizado com sucesso!';
+        else:
+            WSErro('Desculpe, Não foi possível agendar à pelada!', WS_ERROR);
+        endif;
     endif;
-endif;
 
-if($excluirData):  
-    $deleta = new Delete();
-    $deleta->ExeDelete('pelada_agendamento', 'WHERE id_pelada=":pelada" AND data_agendamento=":data" AND hora_agendamento=:hora',
-                       'pelada='.$_SESSION['idPelada'].'&data='.$excluirData.'&hora='.$excluirHora);
-    if($deleta->getResult()):
-        echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+    if($excluirData):  
+        $deleta = new Delete();
+        $deleta->ExeDelete('pelada_agendamento', 'WHERE id_pelada=":pelada" AND data_agendamento=":data" AND hora_agendamento=:hora',
+                           'pelada='.$_SESSION['idPelada'].'&data='.$excluirData.'&hora='.$excluirHora);
+        if($deleta->getResult()):
+            echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+        endif;
+        header("Location:http://localhost:8080/psmanager/peladaagendamento.php");
     endif;
-    header("Location:http://localhost:8080/psmanager/peladaagendamento.php");
-endif;
 ?>
 
 <!DOCTYPE Html>
@@ -143,7 +142,7 @@ endif;
 
         <br /><hr />        
         
-        <table width="625" border="1">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>

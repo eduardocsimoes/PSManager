@@ -2,7 +2,7 @@
             <nav id="cssmenu">
                 <div class="logo">PSManager</div>
                 <div id="head-mobile"></div>
-                <div class="button"></div>
+                <div class="button"></div>
                 <ul class="menu-principal-itens">
                     <li class="active"><a href="home.php">Home</a></li>
                     <li><a href="#">Cadastros</a>
@@ -25,6 +25,7 @@
                     <li><a href="#">Distribuicao</a>
                         <ul>
                             <li><a href="testealgoritmo.php">Teste do Algoritmo</a></li>
+                            <li><a href="teste.php">Teste de qualquer recurso</a></li>
                         </ul>    
                     </li>                
                     <li><a href="sair.php">Sair</a></li>

@@ -52,7 +52,7 @@ endif;
         
         <hr />
         
-        <table width="625" border="1">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>

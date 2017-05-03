@@ -96,21 +96,5 @@ $(document).ready(function(){
         });
     });
 
-    $("table").tablesorter({
-        dateFormat: 'uk',
-        headers: {
-            0: {
-                sorter: false
-            },
-            5: {
-                sorter: false
-            }
-        }
-    }).tablesorterPager({
-        container: $(".pager")
-    });
-    /*.bind('sortEnd', function(){
-        $('table > tbody > tr').removeClass('odd');
-        $('table > tbody > tr:odd').addClass('odd');
-    });*/
+    $("table").tablesorter();
 });

@@ -53,14 +53,14 @@ endif;
         
         <hr />
         
-        <table width="625" border="1">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>
                     <th>Nome da Pelada</th>                    
                     <th>Data do Cadastro</th>
                     <th>Usuário de registro</th>
-                    <th>Excluir Pelada</th>
+                    <th>Ações</th>
                 </tr>    
             </thead>
             <tbody>
@@ -75,8 +75,10 @@ endif;
                             echo '<td>' . $nome_pelada . '</td>';
                             echo '<td>' . $data_cadastro . '</td>';
                             echo '<td>' . $id_peladeiro . '</td>';
-                            echo '<td><a href="http://localhost:8080/psmanager/pelada.php?excluir='.$id_pelada.'"><img src="img/delete1.png" '
-                                        . 'alt="Excluir pelada" width=25 height=25></a></td>';
+                            echo '<td><a href="http://localhost:8080/psmanager/pelada.php?editar='.$id_peladeiro.'"><img src="ico/edit.png" '
+                                        . 'alt="Editar peladeiro"  width="16" height="16"></a>'.'&nbsp&nbsp&nbsp'.
+                                    '<a href="http://localhost:8080/psmanager/pelada.php?excluir='.$id_peladeiro.'"><img src="ico/delete.png" '
+                                        . 'alt="Excluir peladeiro"  width="16" height="16"></a></td>';
                             echo '</tr>';
                         endforeach;                        
                     else:

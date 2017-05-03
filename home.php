@@ -1,5 +1,6 @@
 <?php
-include('verificasecao.php');
+	include('verificasecao.php');
+	require('Classes/Config.inc.php');
 ?>
 
 <!DOCTYPE Html>

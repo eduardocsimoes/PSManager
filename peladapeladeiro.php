@@ -1,85 +1,84 @@
 <?php
-include('verificasecao.php');
+    include('verificasecao.php');
+    require('Classes/Config.inc.php');
 
-require('Classes/Config.inc.php');
+    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
 
-$dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$excluirId = filter_input(INPUT_GET, 'excluir',FILTER_VALIDATE_INT);
+    //$nomePelada = 'Escolha uma Pelada';
+    $nomePeladeiro = 'Escolha um Peladeiro';
 
-//$nomePelada = 'Escolha uma Pelada';
-$nomePeladeiro = 'Escolha um Peladeiro';
-
-if(!isset($_SESSION['idPelada'])):
-    $_SESSION['idPelada'] = null;
-endif;
-
-if(isset($dados['selecaoPelada']) && $dados['selecaoPelada'] == 0):    
-    $_SESSION['nomePelada'] = 'Escolha uma Pelada'; 
-endif;
-
-if(!isset($idPelada)):
-    $idPelada = null;
-endif;
-
-if(!isset($_SESSION['nomePelada'])):    
-    $_SESSION['nomePelada'] = 'Escolha uma Pelada';
-endif;
-
-if (isset($dados) && $dados['submitPelada']=='Selecionar'):
-    //unset($dados['submitPelada']);
-    $nomePelada = $dados['selecaoPelada'];
-
-    $pelada = new Read;
-
-    $pelada->ExeRead('pelada', 'WHERE nome_pelada = :nome_pelada', 'nome_pelada='.$nomePelada);
-    if ($pelada->getResult()):
-        foreach($pelada->getResult() as $resultPelada):            
-            extract($resultPelada);                  
-            $_SESSION['idPelada'] = $id_pelada;
-            $_SESSION['nomePelada'] = $nome_pelada;            
-        endforeach;        
-    else:
-        WSErro('Nenhuma pelada selecionada', WS_INFOR);        
+    if(!isset($_SESSION['idPelada'])):
+        $_SESSION['idPelada'] = null;
     endif;
-endif;
 
-if (isset($dados) && $dados['submitPelada']=='Vincular'):
-    //unset($dados['submitPeladeiro']);
-    $nomePeladeiro = $dados['selecaoPeladeiro'];
-    $dataCadastro = date('Y-m-d');
-
-    $peladeiro = new Read();
-    $criarVinculo = new Create();    
-
-    $peladeiro->ExeRead('peladeiro', 'WHERE nome_peladeiro = :nome_peladeiro', 'nome_peladeiro='.$nomePeladeiro);
-    if ($peladeiro->getResult()):
-        foreach($peladeiro->getResult() as $resultPeladeiro):            
-            extract($resultPeladeiro);
-            $idPeladeiro = $id_peladeiro;
-            
-            $dadosPeladeiro = ['id_pelada' => $_SESSION['idPelada'], 'id_peladeiro' => $idPeladeiro, 'data_cadastro' => $dataCadastro];            
-            $criarVinculo->ExeCreate('pelada_peladeiro', $dadosPeladeiro);  
-
-            if($criarVinculo->getResult()==0):
-                //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
-                echo 'Cadastro realizado com sucesso!';
-            else:
-                WSErro('Desculpe, Não foi possível vincular o peladeiro à pelada!', WS_ERROR);
-            endif;
-        endforeach;  
-    else:
-        WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+    if(isset($dados['selecaoPelada']) && $dados['selecaoPelada'] == 0):    
+        $_SESSION['nomePelada'] = 'Escolha uma Pelada'; 
     endif;
-endif;
 
-if($excluirId):
-    $deleta = new Delete();
-    $deleta->ExeDelete('pelada_peladeiro', 'WHERE id_pelada=:pelada AND id_peladeiro=:peladeiro', 'pelada='.$_SESSION['idPelada'].'&peladeiro='.$excluirId);
-    if($deleta->getResult()):
-        echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+    if(!isset($idPelada)):
+        $idPelada = null;
     endif;
-    header("Location:http://localhost:8080/psmanager/peladapeladeiro.php");
-endif;
+
+    if(!isset($_SESSION['nomePelada'])):    
+        $_SESSION['nomePelada'] = 'Escolha uma Pelada';
+    endif;
+
+    if (isset($dados) && $dados['submitPelada']=='Selecionar'):
+        //unset($dados['submitPelada']);
+        $nomePelada = $dados['selecaoPelada'];
+
+        $pelada = new Read;
+
+        $pelada->ExeRead('pelada', 'WHERE nome_pelada = :nome_pelada', 'nome_pelada='.$nomePelada);
+        if ($pelada->getResult()):
+            foreach($pelada->getResult() as $resultPelada):            
+                extract($resultPelada);                  
+                $_SESSION['idPelada'] = $id_pelada;
+                $_SESSION['nomePelada'] = $nome_pelada;            
+            endforeach;        
+        else:
+            WSErro('Nenhuma pelada selecionada', WS_INFOR);        
+        endif;
+    endif;
+
+    if (isset($dados) && $dados['submitPelada']=='Vincular'):
+        //unset($dados['submitPeladeiro']);
+        $nomePeladeiro = $dados['selecaoPeladeiro'];
+        $dataCadastro = date('Y-m-d');
+
+        $peladeiro = new Read();
+        $criarVinculo = new Create();    
+
+        $peladeiro->ExeRead('peladeiro', 'WHERE nome_peladeiro = :nome_peladeiro', 'nome_peladeiro='.$nomePeladeiro);
+        if ($peladeiro->getResult()):
+            foreach($peladeiro->getResult() as $resultPeladeiro):            
+                extract($resultPeladeiro);
+                $idPeladeiro = $id_peladeiro;
+                
+                $dadosPeladeiro = ['id_pelada' => $_SESSION['idPelada'], 'id_peladeiro' => $idPeladeiro, 'data_cadastro' => $dataCadastro];            
+                $criarVinculo->ExeCreate('pelada_peladeiro', $dadosPeladeiro);  
+
+                if($criarVinculo->getResult()==0):
+                    //WSErro('Cadastro realizado com sucesso!', WS_INFOR);
+                    echo 'Cadastro realizado com sucesso!';
+                else:
+                    WSErro('Desculpe, Não foi possível vincular o peladeiro à pelada!', WS_ERROR);
+                endif;
+            endforeach;  
+        else:
+            WSErro('Nenhum peladeiro selecionado', WS_INFOR);        
+        endif;
+    endif;
+
+    if($excluirId):
+        $deleta = new Delete();
+        $deleta->ExeDelete('pelada_peladeiro', 'WHERE id_pelada=:pelada AND id_peladeiro=:peladeiro', 'pelada='.$_SESSION['idPelada'].'&peladeiro='.$excluirId);
+        if($deleta->getResult()):
+            echo "{$deleta->getRowCount()} registro(s) removidos com sucesso!<hr>";
+        endif;
+        header("Location:http://localhost:8080/psmanager/peladapeladeiro.php");
+    endif;
 ?>
 
 <!DOCTYPE Html>
@@ -147,7 +146,7 @@ endif;
 
         <br /><hr />        
         
-        <table width="625" border="1">
+        <table>
             <thead>
                 <tr>
                     <th>id</th>
